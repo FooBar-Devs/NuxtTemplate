@@ -1,0 +1,1 @@
+# This is FooBar's nuxt template
