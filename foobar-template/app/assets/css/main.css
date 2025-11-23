@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@import "./root.scss";
+
+@plugin "tailwind-scrollbar";
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-TBD-bg-light: var(--color-TBD-bg-light);
+    --color-TBD-bg-dark: var(--color-TBD-bg-dark);
+
+    --color-TBD-text-dark: var(--color-TBD-text-dark);
+    --color-TBD-text-light: var(--color-TBD-text-light);
+
+
+    --color-TBD-fipu-blue-default: var(--color-TBD-fipu-blue-default);
+    --color-TBD-fipu-blue-dark: var(--color-TBD-fipu-blue-dark);
+
+    --color-TBD-fipu-green-default: var(--color-TBD-fipu-green-default);
+    --color-TBD-fipu-green-dark: var(--color-TBD-fipu-green-dark);
+
+    --color-TBD-fipu-orange-default: var(--color-TBD-fipu-orange-default);
+    --color-TBD-fipu-orange-dark: var(--color-TBD-fipu-orange-dark);
+
+    --color-TBD-fipu-yellow-default: var(--color-TBD-fipu-yellow-default);
+
+    --color-TBD-fipu-red-default: var(--color-TBD-fipu-red-default);
+    --color-TBD-fipu-red-dark: var(--color-TBD-fipu-red-dark);
+
+    --shadow-dark: 0px 0px 1px 0px rgba(var(--color-TBD-bg-dark-rgb), 0.1), 0px 0px 8px 1px rgba(var(--color-TBD-bg-dark-rgb), 0.05);
+    --shadow-light: 0px 0px 1px 0px rgba(var(--color-TBD-bg-light-rgb), 0.15), 0px 0px 8px 1px rgba(var(--color-TBD-bg-light-rgb), 0.03);
+
+    --text-1_5xl: 1.375rem;
+    --text-1_5xl--line-height: 1.9rem;    
+
+    --text-2_5xl: 2rem;
+    --text-2_5xl--line-height: 2.125rem;  
+
+    --breakpoint-3xl: 2240px;
+}
+
+.direction-rtl {
+    direction: rtl;
+}
+
+.direction-ltr {
+    direction: ltr;
+}
+
+@-moz-document url-prefix() {
+    * { scrollbar-color: var(--thumb) transparent; }
+}
+
+.font-poppins {
+    font-family: "Poppins", serif;
+}
+@font-face {
+    font-family: 'BrioniTextLight';
+    src: url("assets/fonts/BrioniTextLight.ttf") format('truetype');
+}
+.font-brioni {
+    font-family: 'BrioniTextLight', sans-serif;
+}
+
+.transition-height_opacity {
+    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+.transition-scale {
+    transition: scale 0.3s ease-in-out;
+}
+.vjs-tree-node:hover {
+	background: rgba(125, 125, 125, 0.1) !important;
+}
+
+/*TRANSITION*/
+@utility transition-100 {@apply transition-all duration-100}
+@utility transition-150 {@apply transition-all duration-150}
+@utility transition-300 {@apply transition-all duration-300}
+@utility transition-500 {@apply transition-all duration-500}
+@utility transition-1000 {@apply transition-all duration-1000}
+
+/* POSITION */
+@utility tl-0 { @apply top-0 left-0 }
+@utility tr-0 { @apply top-0 right-0 }
+@utility bl-0 { @apply bottom-0 left-0 }
+@utility br-0 { @apply bottom-0 right-0 }
+@utility translate-center { @apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 }
+@utility absolute-center { @apply absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 }
+
+/* SIZE */
+@utility wh-full { @apply w-full h-full }
+
+/* FLEX */
+@utility flex-full { @apply flex w-full h-full }
+@utility flex-center { @apply flex items-center justify-center }
+@utility flex-col-full { @apply flex flex-col w-full h-full }
+@utility flex-col-center { @apply flex flex-col items-center justify-center }
+@utility flex-center-full { @apply flex w-full h-full items-center justify-center }
+@utility flex-col-center-full { @apply flex flex-col w-full h-full items-center justify-center }
+
+/* PADDING */
+@utility px-window { @apply py-16 px-4 md:px-[5%] lg:px-[10%] xl:px-[15%] 2xl:px-[20%] }
+@utility admin-panels { @apply flex-full px-20 py-12 gap-8 overflow-y-auto }
+
+/* STYLE */
+@utility window-button { @apply text-slate-950 dark:text-slate-400 hover:text-sky-700 dark:hover:text-sky-500 cursor-pointer }
+@utility bg-light-radial { background-color: white; background-image: var(--color-TBD-bg-gradient-light) }
+@utility bg-dark-radial { background-color: black; background-image: var(--color-TBD-bg-gradient-dark) }
+@utility text-link { @apply text-TBD-fipu-blue-default dark:text-TBD-fipu-blue-default hover:underline }
+
+@utility input-bg { @apply bg-TBD-bg-light/50 dark:bg-TBD-bg-dark/25 shadow-dark dark:shadow-light }
+@utility input-ring { @apply ring-1 ring-inset ring-TBD-text-dark hover:ring-TBD-text-dark/75 dark:ring-TBD-text-light/60 dark:hover:ring-TBD-text-light/80 }
+@utility input-text { @apply text-TBD-text-dark hover:text-TBD-text-dark/75 dark:text-TBD-text-light/60 dark:hover:text-TBD-text-light/80 }
+@utility focus-within-input-ring { @apply focus-within:ring-2 focus-within:ring-TBD-fipu-blue-default hover:focus-within:ring-TBD-fipu-blue-default dark:focus-within:ring-TBD-fipu-blue-default dark:hover:focus-within:ring-TBD-fipu-blue-default }
+@utility focus-within-input-text { @apply focus-within:text-TBD-fipu-blue-default hover:focus-within:text-TBD-fipu-blue-default dark:focus-within:text-TBD-fipu-blue-default dark:hover:focus-within:text-TBD-fipu-blue-default }
+
+@utility input-border { @apply border-1 border-TBD-text-dark hover:border-TBD-text-dark/75 dark:border-TBD-text-light/60 dark:hover:border-TBD-text-light/80 }
+@utility focus-within-input-border { @apply focus-within:border-1 focus-within:border-TBD-fipu-blue-default hover:focus-within:border-TBD-fipu-blue-default dark:focus-within:border-TBD-fipu-blue-default dark:hover:focus-within:border-TBD-fipu-blue-default }
+
+@utility input-bg-error { @apply bg-TBD-fipu-red-default/25 dark:bg-TBD-fipu-red-default/10 shadow-dark dark:shadow-light }
+@utility input-ring-error { @apply ring-1 ring-inset ring-TBD-fipu-red-default hover:ring-TBD-fipu-red-default/75 dark:ring-TBD-fipu-red-default/60 dark:hover:ring-TBD-fipu-red-default/80 }
+@utility input-text-error { @apply text-TBD-fipu-red-default hover:text-TBD-fipu-red-default/75 dark:text-TBD-fipu-red-default/60 dark:hover:text-TBD-fipu-red-default/80 }
+@utility focus-within-input-ring-error { @apply focus-within:ring-2 focus-within:ring-TBD-fipu-red-default hover:focus-within:ring-TBD-fipu-red-default dark:focus-within:ring-TBD-fipu-red-default dark:hover:focus-within:ring-TBD-fipu-red-default }
+@utility focus-within-input-text-error { @apply focus-within:text-TBD-fipu-red-default hover:focus-within:text-TBD-fipu-red-default dark:focus-within:text-TBD-fipu-red-default dark:hover:focus-within:text-TBD-fipu-red-default }
+
