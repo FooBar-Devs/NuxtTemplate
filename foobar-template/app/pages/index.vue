@@ -1,5 +1,9 @@
 <template>
     <div class="">
-        hello
+        <h1>Components preview</h1>
+        <hr>
+        <div>
+            
+        </div>
     </div>
 </template>

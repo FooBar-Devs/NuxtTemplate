@@ -26,13 +26,12 @@
             
             <div class="flex items-end gap-2 mt-2">
                 <InputsText v-model="newTheme.name" slim label="Naziv nove teme" name="themeName" placeholder="Naziv nove teme..."/>
-                <InputsButton slim outline class="min-w-7! max-w-7! h-7 p-0!" type="button"
-                @mouseenter="setTooltip('Dodaj novu temu')" @mouseleave="setTooltip()" @click="themeStore.addNewTheme(newTheme.name)"
+                <InputsButton slim outline class="min-w-7! max-w-7! h-7 p-0!" type="button" @click="themeStore.addNewTheme(newTheme.name)"
                 :disabled="!newTheme || newTheme?.name == '' || themeStore.colorThemes.concat(JSONIFY(defaultColorThemes)).map((t: ColorTheme) => t.name).includes(newTheme.name)">
                 <Icon class="text-lg mt-1" name="mdi:paint-outline"/>
                 </InputsButton>
-                <InputsDropdown slim label="Trenutna tema" name="colorTheme" class="w-auto!" @click="themeStore.showSettingsOnHover = false; themeStore.showSidebarOnHover = false;"
-                v-model="themeStore.selectedTheme" :show-items-amount="7" @item-selected="(v : ColorTheme) => themeStore.selectTheme(v)"
+                <InputsDropdown slim label="Trenutna tema" name="colorTheme" class="w-auto!"
+                v-model="themeStore.selectedTheme" :show-items-amount="7" @itemSelected="(v) => themeStore.selectTheme(v as ColorTheme)"
                 :list="JSONIFY(defaultColorThemes).concat(themeStore.colorThemes)" labelName="name"/> 
             </div>
             <div class="flex gap-2 mt-2" :class="defaultColorThemes.map((t: ColorTheme) => t.name).includes(themeStore.selectedTheme.name) ? 'opacity-50 pointer-events-none' : ''">
@@ -65,11 +64,10 @@
                         class="flex items-center gap-1">
                         
                         <Icon name="material-symbols:refresh-rounded" @click="themeStore.resetColor(variant, color.property)"
-                            class="text-lg cursor-pointer hover:rotate-15 hover:opacity-75 transition-150 active:hover:rotate-90"
-                            @mouseenter="setTooltip('Resetiraj boju')" @mouseleave="setTooltip()"/>
+                            class="text-lg cursor-pointer hover:rotate-15 hover:opacity-75 transition-150 active:hover:rotate-90"/>
 
                             <InputsColor :i="i" :j="j" :hoverColor="hoverColor"
-                                @clickColor="hoverColor = i; themeStore.showSettingsOnHover = false; themeStore.showSidebarOnHover = false;"
+                                @clickColor="hoverColor = i;"
                                 :hoverVariant="hoverVariant" v-model="color.value" :property="color.property" @leaveColorPicker="hoverColor = -1;"/>
 
                         <label :for="color.property" :class="i==hoverColor && hoverVariant==j ? 'underline text-TBD-fipu-blue-default dark:text-TBD-fipu-blue-dark' : ''">

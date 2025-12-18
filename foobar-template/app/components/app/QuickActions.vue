@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div :class="themeStore.showQuickActionsOnHover ? 'group' : ''">
+    <div>
 
         <div class="fixed z-1500 flex gap-2 top-4 pr-6 transition-500 group-hover:right-0 group-hover:opacity-100 group-hover:pointer-events-auto right-0">
             
