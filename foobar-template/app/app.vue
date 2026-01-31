@@ -7,10 +7,13 @@
 </script>
 
 <template>
-    <div class="fixed flex-center-full transition-1000 font-poppins" :class="[globalStore.isDarkMode ? 'dark bg-dark-radial' : 'light bg-light-radial']">    
+    <div class="fixed flex-center-full transition-1000" 
+        :class="[globalStore.isDarkMode ? 'dark bg-dark-radial' : 'light bg-light-radial']">    
 
         <AppQuickActions/>
-        <AppThemeSettings/>
+        <AppSettings/>
+        <AppTooltip/>
+        <AppPopups/>
 
         <NuxtLayout class="transition-500 wh-full">
             <NuxtPage/>

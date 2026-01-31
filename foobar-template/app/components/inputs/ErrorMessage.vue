@@ -27,13 +27,13 @@
 </script>
 
 <template>
-    <div v-if="!errorAbsolute" class="overflow-clip ml-1.5 text-TBD-fipu-red-default transition-300 -mb-2"
+    <div v-if="!errorAbsolute" class="overflow-clip ml-1.5 text-TBD-error-light transition-300 -mb-2"
         :style="{ height: errorMessage ? errorDivHeight + 'px' : '0' }"
         :class="errorMessage ? 'opacity-100' : 'opacity-0'">
         <div ref="errorDiv"> {{ errorMessage }} </div>
     </div>
     
-    <div v-else class="absolute -bottom-5 ml-1.5 text-TBD-fipu-red-default" :class="errorMessage ? 'opacity-100' : 'opacity-0'">
+    <div v-else class="absolute -bottom-5 ml-1.5 text-TBD-error-light" :class="errorMessage ? 'opacity-100' : 'opacity-0'">
         {{ errorMessage }}
     </div>
 

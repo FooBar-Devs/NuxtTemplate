@@ -1,6 +1,6 @@
 <script setup lang="ts">
     const themeStore = useThemeStore();
-
+    
     const props = defineProps({
         required: { type: Boolean, default: false },
         name: { type: String, required: true },
@@ -18,16 +18,22 @@
         },
         label: { type: String, default: " " },
         description: { type: String, default: " " },
+        inputClass: { type: String, default: "" },
         icon: { type: String, default: " " },
         showEmitted: { type: Boolean, default: false },
         height: { type: Number, default: 48 },
         ring: { type: String, default: "" },
         itemClass: { type: String, default: "" },
+        listClass: { type: String, default: "" },
         placeholder: { type: String, default: "" },
+        onlyPlaceholder: { type: Boolean, default: false },
         showItemsAmount: { type: Number, default: 3 },
         slim: { type: Boolean, default: false },
         showSelectedHighlight: { type: Boolean, default: true },
         errorAbsolute: { type: Boolean, default: false },
+        hideDefaultLabel: { type: Boolean, default: false },
+        dropdownItemHeight: { type: Number, default: 0 },
+        dropdownHeight: { type: Number, default: 0 }
     });
 
     const name = toRef(props, 'name');
@@ -71,19 +77,23 @@
         emit('update:modelValue', newValue);
     }
 
+    const dropdownHeightCalculated = computed(() => {
+        if (props.dropdownItemHeight == 0)
+            return (props.slim && props.height == 48 ? 28 :props. height) * Math.min(props.list.length, props.showItemsAmount);
+        else return props.dropdownItemHeight * Math.min(props.list.length, props.showItemsAmount) + props.dropdownHeight;
+    });
+
     // UPDATING DROPDOWN POSITION
     function calculateDropdownPosition() {
         if (inputRef.value) {
             const rect = inputRef.value.getBoundingClientRect();
             const windowHeight = window.innerHeight;
 
-            const dropdownHeight = (props.slim && props.height == 48 ? 28 :props. height) * Math.min(props.list.length, props.showItemsAmount) + 8;
-
             const spaceBelow = windowHeight - rect.bottom;
             const spaceAbove = rect.top;
 
             let topPosition;
-            isBelow.value = spaceBelow >= dropdownHeight || spaceBelow >= spaceAbove
+            isBelow.value = spaceBelow >= dropdownHeightCalculated.value + 6 || spaceBelow >= spaceAbove
             if (isBelow.value) {
                 topPosition = rect.bottom + window.scrollY;
             } else {
@@ -102,6 +112,16 @@
         }
     }
 
+    watch(() => props.list,
+        () => {
+            selected.value = props.list.find((obj) => {                
+                if (typeof obj === 'object' && props.emitName!=null) return STRINGIFY(obj[props.emitName]) == STRINGIFY(props.modelValue);
+                return STRINGIFY(obj) == STRINGIFY(props.modelValue);
+            });
+            if (props.showSelectedHighlight) emit('itemSelected', props.modelValue as string | Record<string, any>);
+        }, { deep: true }
+    );
+
     watch(() => props.modelValue,
         () => {
             selected.value = props.list.find((obj) => {                
@@ -109,7 +129,7 @@
                 return STRINGIFY(obj) == STRINGIFY(props.modelValue);
             });
             if (props.showSelectedHighlight) emit('itemSelected', props.modelValue as string | Record<string, any>);
-        }
+        }, { deep: true }
     );
 
     watch(show, (isVisible) => {
@@ -143,6 +163,24 @@
         await new Promise((resolve) => setTimeout(resolve, 300));
         canSet.value = true;
     }
+
+    const displayValue = computed(() => {
+        if (props.list.length === 0) return 'Prazna lista';
+        if (props.placeholder && (!selected.value || props.onlyPlaceholder)) return props.placeholder;
+
+        const key = props.showEmitted ? props.emitName : props.labelName;
+        
+        if (key && typeof selected.value === 'object' && selected.value !== null) {
+            return (selected.value as Record<string, any>)[key];
+        }
+        
+        if (key && typeof inputValue.value === 'object' && inputValue.value !== null) {
+            return (inputValue.value as Record<string, any>)[key];
+        }
+
+        return selected.value ?? inputValue.value;
+    });
+    defineExpose({ calculateDropdownPosition });
 </script>
 
 <template>
@@ -154,8 +192,8 @@
         </InputsLabel>
 
         <div ref="inputRef" @click="inputField.focus(); setShow(!show, 'div1')" @focusout="!focus ? setShow(false, 'div2') : ''"
-            class="relative px-2.5 flex-center-full overflow-hidden transition-300 cursor-pointer" :style="'height: '+ (slim && height == 48 ? 28 : height) +'px'"
-            :class="[ring, slim ? 'gap-1 pl-2 rounded-sm' : 'gap-3 rounded-md', show ? 
+            class="relative px-2.5 flex-center-full overflow-hidden transition-300 cursor-pointer rounded-md" :style="'height: '+ (slim && height == 48 ? 28 : height) +'px'"
+            :class="[inputClass, ring, slim ? 'gap-1 pl-2' : 'gap-3', show ? 
             errorMessage ? 'focus-within-input-ring-error focus-within-input-text-error' : 'focus-within-input-ring focus-within-input-text' : '', 
             errorMessage ? 'input-ring-error input-text-error input-bg-error' : 'input-ring input-text input-bg']">
             
@@ -171,12 +209,7 @@
                 <!--INPUT VALUE---> 
                 <div class="absolute w-full bg-transparent overflow-x-auto whitespace-nowrap scrollbar-none">
                     {{ 
-                        list.length == 0 ? 'Prazna lista' : placeholder != '' ? placeholder :
-                        (labelName || (showEmitted && emitName)) && inputValue && selected 
-                            ? (typeof selected === 'object' && selected !== null 
-                                ? selected[showEmitted ? emitName : labelName] || inputValue 
-                                : selected) 
-                            : selected ? selected : inputValue
+                        displayValue
                     }}
                 </div>
             </div>
@@ -184,7 +217,7 @@
             <!--EXPAND ICON---> 
             <div class="flex-center text-2xl rotate-90" :class="slim ? '-mr-2' : ''">                    
                 <Icon name="material-symbols:chevron-left-rounded" class="transition-scale cursor-pointer"
-                    :class="show ? '-scale-100 text-TBD-fipu-blue-default' : ''"/>
+                    :class="show ? '-scale-100 text-TBD-primary-light dark:text-TBD-primary-dark' : ''"/>
             </div>
         </div>
         
@@ -193,23 +226,26 @@
 
         <!--DROPDOWN-->
         <Teleport to="body">
-            <div class="fixed flex bg-red-500/75" :class="isBelow ? '' : 'items-end'" :style="dropdownStyles">
+            <div class="fixed flex z-10" :class="isBelow ? '' : 'items-end'" :style="dropdownStyles">
                 <div @mouseleave="focus = false" @mouseenter="focus = true" :style="[
-                    show ? 'opacity: 100%; ' + 'height: '+(slim && height == 48 ? 28 : height)*Math.min(list.length, showItemsAmount)+'px' : 'height: 0px; opacity: 0%;']"
+                    show ? 'opacity: 100%; ' + 'height: '+dropdownHeightCalculated+'px' : 'height: 0px; opacity: 0%;']"
                     :class="[isOverflowVisible ? 'overflow-y-auto' : '', themeStore.isDarkMode ? 'dark' : '', isBelow ? 'mt-2' : 'mb-2']"
                     class="w-full backdrop-blur-sm drop-shadow-lg rounded overflow-hidden transition-height_opacity
                         duration-1000 absolute z-50 ring-1 ring-TBD-text-dark/10">
                     
-                    <ul class="z-50 w-full text-left">
+                    <div class="z-50 w-full text-left" :class="listClass">
                         <li v-for="(v, id) in list" @click="setShow(false); update(v); $emit('itemSelected', v)"
                             :key="id" :style="'height: '+(slim && height == 48 ? 28 : height)+'px'"
                             class="flex items-center bg-TBD-bg-light/50 hover:bg-TBD-bg-dark/10 dark:bg-TBD-bg-dark/50 dark:hover:bg-TBD-bg-light/10 input-text cursor-pointer z-50 whitespace-nowrap"
                             :class="[itemClass, slim ? 'px-2 text-xs' : 'px-5 text-sm',
                                 JSON.stringify(v) == JSON.stringify(selected) && showSelectedHighlight ? 
-                                    'bg-TBD-fipu-blue-default/75 dark:bg-TBD-fipu-blue-default/50 text-TBD-bg-light font-bold' : '']">
-                            {{ labelName && typeof v === 'object' ? v[labelName as keyof typeof v] : v }}
+                                    'bg-TBD-primary-light/75 dark:bg-TBD-primary-dark/95 text-TBD-text-light dark:text-TBD-text-dark font-bold' : '']">
+                                <slot name="item" :item="v" :id="id" :selected="JSON.stringify(v) == JSON.stringify(selected)"/>
+                                <span v-if="!hideDefaultLabel">
+                                    {{ labelName && typeof v === 'object' ? v[labelName as keyof typeof v] : v }}
+                                </span>
                         </li>   
-                    </ul>
+                    </div>
                 </div>
             </div>
         </Teleport>

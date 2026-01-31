@@ -11,6 +11,13 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
 
     css: ['./app/assets/css/main.css'],
+    
+    imports: {
+        dirs: [
+            'composables/*/*.ts',
+            'utils/*/*.ts'
+        ]
+    },
 
     app: {
         baseURL: "/",
@@ -39,7 +46,7 @@ export default defineNuxtConfig({
         }
     },
 
-    modules: ['@nuxt/icon', '@pinia/nuxt', 'pinia-plugin-persistedstate', "@vee-validate/nuxt"],
+    modules: ['@nuxt/icon', '@pinia/nuxt', 'pinia-plugin-persistedstate', "@vee-validate/nuxt", "@vueuse/nuxt"],
     vite: {
         plugins: [
             tailwindcss(),
