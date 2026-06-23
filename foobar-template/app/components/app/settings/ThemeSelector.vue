@@ -33,6 +33,8 @@
             });
         }
     });
+
+    const makeNewThemeTooltip = ref(`<p class="text-center">Izradi novu temu iz trenutne.<br><b>Nova tema mora imati različit naziv od postojećih tema!</b></p>`);
 </script>
 
 <template>
@@ -46,8 +48,10 @@
             name="themeName" placeholder="Naziv nove teme..." class="grow"/>
         
         <InputsButton slim outline class="min-w-7! max-w-7! h-7 p-0!" type="button"
-            @mouseenter="setTooltip('Izradi novu temu iz trenutne')" @mouseleave="setTooltip()" @click="themeStore.addNewTheme(selectedThemeNewName)"
-            :disabled="!newTheme || selectedThemeNewName == '' || themeStore.uiSettings.colorThemes.concat(JSONIFY(defaultColorThemes)).map(t=>t.name).includes(selectedThemeNewName)">
+            @mouseenter="setTooltip(themeStore.uiSettings.colorThemes.length < 3 ? (themeStore.uiSettings.colorThemes.concat(JSONIFY(defaultColorThemes)).map(t=>t.name).includes(selectedThemeNewName) ? makeNewThemeTooltip : 'Izradi novu temu iz trenutne') : 'Dosegnut je maksimalan broj korisničkih tema (3)')" 
+            
+            @mouseleave="setTooltip()" @click="themeStore.addNewTheme(selectedThemeNewName)"
+            :disabled="(!newTheme || selectedThemeNewName == '' || themeStore.uiSettings.colorThemes.concat(JSONIFY(defaultColorThemes)).map(t=>t.name).includes(selectedThemeNewName)) || themeStore.uiSettings.colorThemes.length >= 3">
             <Icon class="text-lg" name="mdi:paint-outline"/>
         </InputsButton>
         
@@ -71,9 +75,9 @@
                             {{ item.name }}
                         </div>
 
-                        <div class="flex flex-wrap gap-[3px]" v-if="themes[id]">
+                        <div class="flex flex-wrap gap-0.75" v-if="themes[id]">
                             <div v-for="color in themes[id].colors[themeStore.isDarkMode ? 'dark' : 'light']" 
-                                class="h-3 aspect-square rounded-xs outline-1 bg-white"
+                                class="h-3 aspect-square rounded-xs outline-1 bg-TBD-bg-light dark:bg-TBD-bg-dark"
                                 :class="selected ? 'outline-TBD-text-light dark:outline-TBD-text-dark' : 'outline-TBD-text-dark dark:outline-TBD-text-light'" :key="color.property">
                                 <div class="wh-full" :style="{ backgroundColor: color.value }" >
 

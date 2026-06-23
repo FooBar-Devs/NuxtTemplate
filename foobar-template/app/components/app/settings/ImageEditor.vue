@@ -19,13 +19,13 @@
 
 <template>
     <div>
-        <p class="font-bold text-lg mt-4"> SLIKE: </p>
+        <p class="font-bold text-lg my-4"> SLIKE: </p>
 
         <div class="flex w-full justify-around gap-2">
             <div v-for="variant, j in (['light', 'dark'] as const)" :key="variant"
                 class="flex flex-col w-1/2" @click="hoverVariantModel = j">
 
-                <p class="font-bold mt-4 mb-2">
+                <p class="font-bold mb-2 sticky top-8 z-1 py-1 text-center bg-TBD-bg-light dark:bg-TBD-bg-dark rounded border border-TBD-bg-dark/25 dark:border-TBD-bg-light/25">
                     {{ variant === 'light' ? 'Svijetla tema' : 'Tamna tema' }}
                 </p>
 

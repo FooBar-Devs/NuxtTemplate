@@ -23,7 +23,7 @@
 </script>
 
 <template>
-    <div class="flex gap-2 mt-2">
+    <div class="flex gap-2 mt-0 pt-2 sticky -top-2 backdrop-blur-sm z-2 pb-1 -my-1 -mx-4 px-4">
         <InputsButton v-if="!defaultColorThemes.map(t=>t.name).includes(selectedTheme.name)" 
             class="w-full transition-300" type="button" color-outline="error" 
             :disabled="defaultColorThemes.map(t=>t.name).includes(selectedTheme.name) || 

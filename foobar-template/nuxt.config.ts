@@ -51,5 +51,13 @@ export default defineNuxtConfig({
         plugins: [
             tailwindcss(),
         ],
+        optimizeDeps: {
+            include: [
+                '@cyhnkckali/vue3-color-picker',
+                '@vue/devtools-core',
+                '@vue/devtools-kit',
+                '@vueform/slider',
+            ]
+        }
     },
 })

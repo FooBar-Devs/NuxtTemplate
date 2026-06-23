@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import ColorEditor from './settings/ColorEditor.vue';
+import ImageEditor from './settings/ImageEditor.vue';
+import ThemeActions from './settings/ThemeActions.vue';
+import ThemeSelector from './settings/ThemeSelector.vue';
+import UISettings from './settings/UISettings.vue';
+
     const themeStore = useThemeStore();
 
     debouncedWatch(
@@ -9,6 +15,8 @@
             themeStore.updateStyle(theme, 'images');            
         }, 'theme'
     );
+
+    defineProps({ settingsOpen: Boolean });
 
     const hoverVariant = ref(-1)
     const hoverColor = ref(-1)
@@ -32,16 +40,20 @@
 </script>
 
 <template>
-    <div class="fixed tl-0 flex-center-full transition-300 ease-in overflow-hidden"
+    <div class="absolute bl-0 flex flex-col transition-300 ease-in px-6 pt-6 pb-16 pointer-events-none"
         :class="!themeStore.settingsOpen ? 'opacity-0 pointer-events-none blur-sm' : 'opacity-100'">
-        
-        <div class="overflow-hidden rounded-lg shadow-dark dark:shadow-light aspect-square z-5
-            flex-col-full text-xs dark:bg-TBD-bg-dark/50 rotate-180 w-146 min-w-102 min-h-82 h-204 max-h-screen direction-rtl
-            dark:text-TBD-text-light bg-TBD-bg-light/50 text-TBD-text-dark border border-TBD-bg-dark/10" ref="settingsPanel">
+        <TextResizableDiv resize-top inverseY resize-right
+            :min-width="408" :min-height="328" :initial-height="816"
+            hide-edges :full-edge="false"
+            class="overflow-hidden rounded-lg shadow-dark dark:shadow-light aspect-square z-5 wh-full
+            flex-col-full text-xs dark:bg-TBD-bg-dark/50
+            dark:text-TBD-text-light bg-TBD-bg-light/50 text-TBD-text-dark border border-TBD-bg-dark/10"
+            :class="themeStore.settingsOpen ? 'pointer-events-auto' : 'pointer-events-none'" ref="settingsPanel"
+            id="TUTORIAL_settings">
 
             <TextBGEffect/>
             
-            <div class="rotate-180 overflow-y-auto overflow-x-hidden flex-col-full direction-ltr">
+            <div class="overflow-y-auto overflow-x-hidden flex-col-full">
                 <div class="w-full min-w-102 min-h-8 flex overflow-hidden text-center text-sm">
                     <div class="flex-center grow px-2 bg-TBD-primary-light dark:bg-TBD-primary-dark text-TBD-text-light dark:text-TBD-text-dark">
                         Postavke
@@ -61,7 +73,7 @@
                 <div class="w-full min-w-102 h-fit py-2 overflow-x-hidden overflow-y-auto">
 
                     <!-- UI Postavke -->
-                    <AppSettingsUISettings />
+                    <UISettings />
 
                     <TextLine class="my-4"/>
 
@@ -69,7 +81,7 @@
                         <p class="font-bold text-lg"> TEME: </p>
                         
                         <!-- Theme Selector -->
-                        <AppSettingsThemeSelector
+                        <ThemeSelector
                             :themes="colorThemesCombined"
                             :selectedTheme="themeStore.selectedTheme"
                             v-model:selectedThemeNewName="selectedThemeNewName"
@@ -78,18 +90,18 @@
                             @select="selectTheme" />
 
                         <!-- Theme Actions -->
-                        <AppSettingsThemeActions
+                        <ThemeActions 
                             :selectedTheme="themeStore.selectedTheme"
                             v-model:selectedThemeNewName="selectedThemeNewName" />
                         
                         <!-- Color editor -->
-                        <AppSettingsColorEditor 
+                        <ColorEditor
                             :selectedTheme="themeStore.selectedTheme"
                             v-model:hoverColor="hoverColor"
                             v-model:hoverVariant="hoverVariant"/>
 
                         <!-- Image editor -->
-                        <AppSettingsImageEditor
+                        <ImageEditor
                             :selectedTheme="themeStore.selectedTheme"
                             v-model:hoverVariant="hoverVariant" />
                     </div>
@@ -97,6 +109,6 @@
                 </div>
 
             </div>
-        </div>
+        </TextResizableDiv>
     </div>
 </template>
