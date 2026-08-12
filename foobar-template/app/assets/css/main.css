@@ -2,7 +2,7 @@
 @import "./root.scss";
 
 @plugin "tailwind-scrollbar";
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
     --color-TBD-bg-light: var(--color-TBD-bg-light);
@@ -93,11 +93,12 @@ body {
 .crisp-edges { image-rendering: crisp-edges; }
 
 /*TRANSITION*/
-@utility transition-100 {@apply transition-all duration-100  before:transition-all before:duration-100}
-@utility transition-150 {@apply transition-all duration-150  before:transition-all before:duration-150}
-@utility transition-300 {@apply transition-all duration-300  before:transition-all before:duration-300}
-@utility transition-500 {@apply transition-all duration-500  before:transition-all before:duration-500}
-@utility transition-1000 {@apply transition-all duration-1000  before:transition-all before:duration-1000}
+@utility transition-100 {@apply transition-all duration-100 }
+@utility transition-150 {@apply transition-all duration-150 }
+@utility transition-300 {@apply transition-all duration-300 }
+@utility transition-500 {@apply transition-all duration-500 }
+@utility transition-1000 {@apply transition-all duration-1000 }
+
 /* POSITION */
 @utility tl-0 { @apply top-0 left-0 }
 @utility tr-0 { @apply top-0 right-0 }
@@ -129,7 +130,6 @@ body {
 @utility bg-blur-lg { @apply before:backdrop-blur-lg }
 
 /* STYLE */
-@utility window-button { @apply text-slate-950 dark:text-slate-400 hover:text-sky-700 dark:hover:text-sky-500 cursor-pointer }
 @utility bg-light-radial { background-color: white; background-image: var(--color-TBD-bg-gradient-light) }
 @utility bg-dark-radial { background-color: black; background-image: var(--color-TBD-bg-gradient-dark) }
 @utility text-link { @apply text-TBD-primary-light dark:text-TBD-primary-dark hover:underline }
@@ -143,11 +143,11 @@ body {
 @utility input-border { @apply border border-TBD-text-dark hover:border-TBD-text-dark/75 dark:border-TBD-text-light/60 dark:hover:border-TBD-text-light/80 }
 @utility focus-within-input-border { @apply focus-within:border focus-within:border-TBD-primary-light hover:focus-within:border-TBD-primary-light dark:focus-within:border-TBD-primary-dark dark:hover:focus-within:border-TBD-primary-dark }
 
-@utility input-bg-error { @apply bg-TBD-error-light/25 dark:bg-TBD-error-light/10 shadow-dark dark:shadow-light }
-@utility input-ring-error { @apply ring-1 ring-inset ring-TBD-error-light hover:ring-TBD-error-light/75 dark:ring-TBD-error-light/60 dark:hover:ring-TBD-error-light/80 }
-@utility input-text-error { @apply text-TBD-error-light hover:text-TBD-error-light/75 dark:text-TBD-error-light/60 dark:hover:text-TBD-error-light/80 }
-@utility focus-within-input-ring-error { @apply focus-within:ring-2 focus-within:ring-TBD-error-light hover:focus-within:ring-TBD-error-light dark:focus-within:ring-TBD-error-light dark:hover:focus-within:ring-TBD-error-light }
-@utility focus-within-input-text-error { @apply focus-within:text-TBD-error-light hover:focus-within:text-TBD-error-light dark:focus-within:text-TBD-error-light dark:hover:focus-within:text-TBD-error-light }
+@utility input-bg-error { @apply bg-TBD-error-light/25 dark:bg-TBD-error-dark/10 shadow-dark dark:shadow-light }
+@utility input-ring-error { @apply ring-1 ring-inset ring-TBD-error-light hover:ring-TBD-error-light/75 dark:ring-TBD-error-dark/75 dark:hover:ring-TBD-error-dark/80 }
+@utility input-text-error { @apply text-TBD-error-light hover:text-TBD-error-light/75 dark:text-TBD-error-dark/60 dark:hover:text-TBD-error-dark/80 }
+@utility focus-within-input-ring-error { @apply focus-within:ring-2 focus-within:ring-TBD-error-light hover:focus-within:ring-TBD-error-light dark:focus-within:ring-TBD-error-dark dark:hover:focus-within:ring-TBD-error-dark }
+@utility focus-within-input-text-error { @apply focus-within:text-TBD-error-light hover:focus-within:text-TBD-error-light dark:focus-within:text-TBD-error-dark dark:hover:focus-within:text-TBD-error-dark }
 
 @utility tbd-slider {
     --slider-handle-ring-width: 4px;

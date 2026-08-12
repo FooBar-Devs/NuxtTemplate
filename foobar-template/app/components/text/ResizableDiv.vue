@@ -38,6 +38,10 @@
     let startW = 0, startH = 0;
     let startTop = 0, startLeft = 0;
 
+    function clamp(value: number, min: number, max: number) {
+        return Math.min(max, Math.max(min, value));
+    }
+
     function onMouseDown(e: MouseEvent, dir: ResizeDir) {
         if (!container.value) return;
         resizing  = dir;
@@ -56,8 +60,10 @@
         if (!resizing) return;
         const invY = props.inverseY;
         const invX = props.inverseX;
-        const dx  = !invX ? e.clientX - startX : startX - e.clientX;
-        const dy  = !invY ? e.clientY - startY : startY - e.clientY;
+        const pointerX = clamp(e.clientX, 32, window.innerWidth-32);
+        const pointerY = clamp(e.clientY, 32, window.innerHeight-32);
+        const dx  = !invX ? pointerX - startX : startX - pointerX;
+        const dy  = !invY ? pointerY - startY : startY - pointerY;
         const dir = resizing;
 
         const movesRight  = dir === 'right'  || dir === 'top-right'    || dir === 'bottom-right';

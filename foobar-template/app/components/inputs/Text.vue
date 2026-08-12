@@ -1,18 +1,27 @@
 <script setup lang="ts">
     const props = defineProps({
-        required:      { type: Boolean, default: false },       // marks field as required
-        maxlength:     { type: Number, default: 64 },           // max allowed input length
-        name:          { type: String, required: true },        // input name/id (also used for form + validation)
-        placeholder:   { type: String, default: "" },           // placeholder text shown when empty
-        label:         { type: String, default: "" },           // label text above input
-        description:   { type: String, default: "" },           // optional helper text under label
-        icon:          { type: String, default: "" },           // optional icon name
-        modelValue:    { type: [String, Number], default: "" }, // v-model binding value
-        onkeypress:    { type: Function as PropType<(event: KeyboardEvent) => void> }, // custom keypress handler
-        slim:          { type: Boolean, default: false },       // compact input variant
-        errorAbsolute: { type: Boolean, default: false },       // error message positioning mode
+        // v-model value
+        modelValue:    { type: [String, Number], default: "" },
+
+        // input interaction props
         disabled:      { type: Boolean, default: false },       // disables input interaction
         readonly:      { type: Boolean, default: false },       // read-only mode (no editing)
+        
+        // form field props
+        required:      { type: Boolean, default: false },       // marks field as required
+        name:          { type: String, required: true },        // input name/id (also used for form + validation)
+        label:         { type: String, default: "" },           // label text above input
+        description:   { type: String, default: "" },           // optional helper text under label
+        errorAbsolute: { type: Boolean, default: false },       // error message positioning mode
+        
+        // optional icon & compact mode
+        icon:          { type: String, default: "" },
+        slim:          { type: Boolean, default: false },
+
+        // input behavior props
+        placeholder:   { type: String, default: "" },           // placeholder text shown when empty
+        maxlength:     { type: Number, default: 64 },           // max allowed input length
+        onkeypress:    { type: Function as PropType<(event: KeyboardEvent) => void> }, // custom keypress handler
     });
 
     // reactive reference to field name
@@ -64,9 +73,9 @@
         <!-- INPUT SLOT -->
         <template #input>
             <div @click="inputField.focus()" 
-                class="relative flex-center pr-0.5 pl-1.5 rounded-md overflow-hidden outline-none transition-300"
+                class="relative flex-center pr-0.5 rounded-md overflow-hidden outline-none transition-300"
                 :class="[
-                    slim ? 'h-7 gap-1.5': 'h-12 gap-2', 
+                    slim ? 'h-7 gap-1.5 pl-1.5': 'h-12 gap-2 pl-3', 
 
                     // error vs normal styles
                     !errorMessage 
@@ -91,8 +100,8 @@
                 
 
                 <!-- OPTIONAL ICON -->
-                <div v-if="icon != ''" class="flex-center" 
-                    :class="slim ? 'text-xl -ml-1' : 'text-2xl'">
+                <div v-if="icon != ''" class="flex-center transition-300" 
+                    :class="slim ? 'text-xl' : 'text-2xl'">
                     <Icon :name="icon"/>
                 </div>
 
@@ -106,7 +115,7 @@
                     @input="handleInput" @blur="handleBlur" @keypress="onkeypress"
 
                     class="peer wh-full bg-transparent outline-none placeholder:text-TBD-bg-light mt-px transition-300" 
-                    :class="[!slim ? '-mb-px ml-0.5' : '']"/>
+                    :class="[slim ? '' : '-mb-px']"
 
 
                 <!-- PLACEHOLDER -->

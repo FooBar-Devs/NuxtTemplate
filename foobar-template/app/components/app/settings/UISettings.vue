@@ -38,6 +38,8 @@
             <p class="font-bold text-lg py-2">
                 EFEKTI:
             </p>                        
+            
+            <InputsCheckBox slim v-model="themeStore.uiSettings.glassEffect"
                 label="Uključi efekt stakla" />
             
             <div class="transition-300"

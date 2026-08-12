@@ -11,7 +11,7 @@
 
 <template>
     <div class="relative flex flex-col" 
-        :class="[
+        :class="[ 
             {'text-xs' : slim},
             {'gap-2' : label != ' ' && label}
         ]">

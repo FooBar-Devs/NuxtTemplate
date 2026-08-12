@@ -7,7 +7,7 @@
 </script>
 
 <template>
-    <div class="fixed flex-center-full transition-1000" 
+    <div class="fixed flex-center-full transition-1000 overflow-auto" 
         :class="[globalStore.isDarkMode ? 'dark bg-dark-radial' : 'light bg-light-radial']">    
 
         <AppQuickActions/>

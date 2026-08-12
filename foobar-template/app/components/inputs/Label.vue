@@ -29,7 +29,7 @@
 
 			{{ description }}
 
-		    <slot name="description"/>
+			<slot name="description"/>
 
 			<!-- REQUIRED MARK (fallback when no label, only description) -->
 			<span v-if="required && (label == ' ' || !label)" 

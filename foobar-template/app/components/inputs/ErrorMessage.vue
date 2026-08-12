@@ -38,7 +38,7 @@
 
     <!-- NON-ABSOLUTE ERROR MODE (pushes layout, animated height) -->
     <div v-if="!errorAbsolute" 
-        class="overflow-clip ml-1.5 text-TBD-error-light transition-300 -mb-2"
+        class="overflow-clip ml-1.5 text-TBD-error-light dark:text-TBD-error-dark transition-300 -mb-2"
         :style="{ height: errorMessage ? errorDivHeight + 'px' : '0' }"
         :class="errorMessage ? 'opacity-100' : 'opacity-0'">
 
@@ -48,7 +48,7 @@
     </div>
     
     <!-- ABSOLUTE ERROR MODE -->
-    <div v-else class="absolute ml-1.5 text-TBD-error-light" 
+    <div v-else class="absolute ml-1.5 text-TBD-error-light dark:text-TBD-error-dark" 
         :class="[
             errorMessage ? 'opacity-100' : 'opacity-0',
 

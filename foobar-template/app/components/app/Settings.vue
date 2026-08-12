@@ -40,8 +40,8 @@ import UISettings from './settings/UISettings.vue';
 </script>
 
 <template>
-    <div class="absolute bl-0 flex flex-col transition-300 ease-in px-6 pt-6 pb-16 pointer-events-none"
-        :class="!themeStore.settingsOpen ? 'opacity-0 pointer-events-none blur-sm' : 'opacity-100'">
+    <div class="fixed z-10 bl-0 flex flex-col transition-300 ease-in px-6 pt-6 pb-6 pointer-events-none"
+        :class="!themeStore.settingsOpen ? 'opacity-0 pointer-events-none blur-sm z-2000' : 'opacity-100'">
         <TextResizableDiv resize-top inverseY resize-right
             :min-width="408" :min-height="328" :initial-height="816"
             hide-edges :full-edge="false"
