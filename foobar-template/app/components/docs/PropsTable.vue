@@ -1,49 +1,107 @@
 <script setup lang="ts">
+
     interface DocsPropRow {
-        name: string;
-        type: string;
-        required: boolean;
+        property: string;
         description: string;
+        type: Array<string> | string;
+        default: any;
+        required: boolean;
     }
 
     defineProps<{
         rows: DocsPropRow[];
     }>();
+
 </script>
 
 <template>
-    <div class="overflow-hidden rounded-md border border-TBD-bg-dark/10 dark:border-TBD-bg-light/10">
-        <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)_58px_minmax(0,1.9fr)] bg-TBD-primary-light dark:bg-TBD-primary-dark px-2.5 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-TBD-text-light dark:text-TBD-text-dark">
-            <div>Prop</div>
-            <div>Type</div>
-            <div>Req.</div>
-            <div>Description</div>
+    <DocsPanel eyebrow="api reference" title="Props" bodyClass="p-0">
+        
+        <div class="flex bg-TBD-bg-light dark:bg-TBD-bg-dark px-3 py-1.5 
+            text-eyebrow-bold text-TBD-text-dark dark:text-TBD-text-light
+            border-b border-TBD-bg-dark/10 dark:border-TBD-bg-light/10 transition-300">
+            
+            <div class="min-w-1/5 max-w-1/5">Property</div>
+            <div class="grow">Description</div>
+            <div class="min-w-1/5 max-w-1/5">Type</div>
+            <div class="min-w-1/5 max-w-1/5">Default</div>
+            <div class="min-w-18 max-w-18">Required</div>
+
         </div>
 
-        <div class="divide-y divide-TBD-bg-dark/10 dark:divide-TBD-bg-light/10">
-            <div v-for="row in rows" :key="row.name"
-                class="grid grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)_58px_minmax(0,1.9fr)] gap-2.5 bg-TBD-bg-light/35 px-2.5 py-2 text-xs leading-5 dark:bg-TBD-bg-dark/20 sm:text-sm">
-                <div class="font-semibold text-TBD-primary-light dark:text-TBD-primary-dark wrap-break-word">
-                    {{ row.name }}
+        <div class="divide-y divide-TBD-bg-dark/10 dark:divide-TBD-bg-light/10
+            bg-TBD-bg-light/25 dark:bg-TBD-bg-dark/25">
+
+            <div v-for="row in rows" :key="row.property"
+                class="flex gap-2 items-center p-2 text-xs
+                    bg-TBD-bg-light/5 dark:bg-TBD-bg-dark/5
+                    even:bg-TBD-bg-dark/5 even:dark:bg-TBD-bg-light/5 transition-300">
+                
+                <div class="min-w-1/5 max-w-1/5 font-semibold text-TBD-primary-light dark:text-TBD-primary-dark transition-300">
+                    {{ row.property }}
                 </div>
 
-                <div class="text-TBD-secondary-light dark:text-TBD-secondary-dark wrap-break-word">
-                    {{ row.type }}
-                </div>
-
-                <div>
-                    <span class="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.08em]"
-                        :class="row.required
-                            ? 'bg-TBD-error-light/15 text-TBD-error-light dark:bg-TBD-error-dark/20 dark:text-TBD-error-dark'
-                            : 'bg-TBD-confirm-light/15 text-TBD-confirm-light dark:bg-TBD-confirm-dark/20 dark:text-TBD-confirm-dark'">
-                        {{ row.required ? 'Yes' : 'No' }}
-                    </span>
-                </div>
-
-                <div class="opacity-85 wrap-break-word leading-[1.35]">
+                <div class="grow">
                     {{ row.description }}
                 </div>
+
+                <div class="min-w-1/5 max-w-1/5 flex items-center h-full pb-0.5 text-TBD-secondary-light dark:text-TBD-secondary-dark 
+                    overflow-x-auto overflow-y-hidden scrollbar-size-1.25 transition-300">
+                    
+                    <TextMark v-if="typeof row.type === 'string'" color="neutral" class="ml-1 normal-case!">
+                        {{ row.type }}
+                    </TextMark>
+                    <TextMark v-else v-for="type in row.type" :key="type" color="neutral" class="ml-1 normal-case!">
+                        {{ type }}
+                    </TextMark>
+
+                </div>
+
+                <div class="h-full min-w-1/5 max-w-1/5">
+                    
+                    <span v-if="row.default === ''" class="italic opacity-50">
+                        (empty string)
+                    </span>
+                    
+                    <span v-else-if="row.default === null" class="italic text-TBD-error-light dark:text-TBD-error-dark transition-300">
+                        (null)
+                    </span>
+                    
+                    <span v-else-if="row.default === undefined" class="italic text-TBD-error-light dark:text-TBD-error-dark transition-300">
+                        (undefined)
+                    </span>
+                    
+                    <span v-else>
+                        
+                        <span v-if="row.type === 'string'" class="text-TBD-warning-light dark:text-TBD-warning-dark transition-300">
+                            "{{ row.default }}"
+                        </span>
+                        
+                        <span v-else-if="row.type === 'boolean'">
+                            <span v-if="row.default" class="text-TBD-confirm-light dark:text-TBD-confirm-dark transition-300">true</span>
+                            <span v-else class="text-TBD-error-light dark:text-TBD-error-dark transition-300">false</span>
+                        </span>
+                        
+                        <span v-else-if="row.type === 'number'" class="text-TBD-secondary-light dark:text-TBD-secondary-dark transition-300">
+                            {{ row.default }}
+                        </span>
+                        
+                        <span v-else class="text-TBD-text-dark dark:text-TBD-text-light transition-300">
+                            {{ row.default }}
+                        </span>
+                    </span>
+
+                </div>
+
+                <div class="min-w-18 max-w-18">
+                    <TextMark :color="row.required ? 'error' : 'confirm'" class="ml-1">
+                        {{ row.required ? 'Yes' : 'No' }}
+                    </TextMark>
+                </div>
+
             </div>
+
         </div>
-    </div>
+
+    </DocsPanel>
 </template>

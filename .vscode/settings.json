@@ -8,5 +8,9 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true
     },
-    "hide-files.files": []
+    "hide-files.files": [],
+    //set tailwind as language format for only main.css
+    "[css]": {
+        "editor.defaultFormatter": "bradlc.vscode-tailwindcss"
+    },
 }

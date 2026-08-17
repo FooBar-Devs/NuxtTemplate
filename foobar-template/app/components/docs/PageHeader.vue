@@ -12,7 +12,7 @@
 </script>
 
 <template>
-    <div class="flex flex-wrap items-center gap-4 text-TBD-text-dark dark:text-TBD-text-light">
+    <div class="flex flex-wrap items-center gap-4 text-TBD-text-dark dark:text-TBD-text-light transition-300">
         <h1 class="text-3xl font-bold">
             {{ title }}
         </h1>

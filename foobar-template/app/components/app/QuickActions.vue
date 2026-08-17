@@ -1,5 +1,9 @@
 <script setup lang="ts">
     const themeStore = useThemeStore();
+    const currentThemeIndex = computed(() => {
+        const colorThemes = themeStore.uiSettings.colorThemes.concat(defaultColorThemes);
+        return colorThemes.findIndex(theme => theme.name === themeStore.selectedTheme.name);
+    });
 </script>
 
 <template>
@@ -7,6 +11,9 @@
 
         <div class="fixed z-1500 flex gap-2 top-4 pr-6 transition-500 group-hover:right-0 group-hover:opacity-100 group-hover:pointer-events-auto right-0">
             
+            <InputsToggle @onToggle="themeStore.cycleThemes()" :toggled="currentThemeIndex % 2 === 0" 
+                :toggledIcon="'material-symbols:format-paint-outline-rounded'"  :unToggledIcon="'material-symbols:format-paint-outline-rounded'" altAnimation/>
+
             <InputsToggle @onToggle="themeStore.settingsOpen = !themeStore.settingsOpen" :toggled="!themeStore.settingsOpen" 
                 altAnimation :toggledIcon="'line-md:cog'"  :unToggledIcon="'line-md:cog-off'"/> 
 

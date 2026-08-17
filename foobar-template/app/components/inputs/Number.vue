@@ -1,7 +1,7 @@
 <script setup lang="ts">
     const props = defineProps({
         // v-model value
-        modelValue:    { type: Number, default: 0 },
+        modelValue:    { type: Number, default: 0.1 },
 
         // input interaction props
         disabled:      { type: Boolean, default: false },       // disables input interaction

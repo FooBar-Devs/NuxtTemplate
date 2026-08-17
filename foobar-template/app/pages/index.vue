@@ -7,7 +7,7 @@
                 <div class="relative z-1 space-y-4 p-6 sm:p-8">
                     <div class="space-y-2">
                         <p class="text-[10px] font-semibold uppercase tracking-[0.24em] opacity-55">Workspace Docs</p>
-                        <h1 class="max-w-4xl text-3xl font-bold leading-tight sm:text-4xl">
+                        <h1 class="text-3xl font-bold leading-tight sm:text-4xl">
                             Component documentation styled like a real docs app.
                         </h1>
                         <p class="max-w-3xl text-sm leading-6 opacity-80">
@@ -17,10 +17,10 @@
                     </div>
 
                     <div class="flex flex-wrap gap-2.5">
-                        <InputsButton class="min-w-fit" @click="navigateTo('/testing')">
+                        <InputsButton class="min-w-fit" @click="navigateTo('/components')">
                             Open Docs
                         </InputsButton>
-                        <InputsButton outline class="min-w-fit" @click="navigateTo('/testing/textinput')">
+                        <InputsButton outline class="min-w-fit" @click="navigateTo('/components/textinput')">
                             View Text Input Example
                         </InputsButton>
                     </div>

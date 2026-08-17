@@ -2,12 +2,13 @@
     const globalStore = useThemeStore();
 
     onBeforeMount(async () => { 
-        globalStore.setRootStyle();
+        globalStore.toggleTheme();
+        globalStore.toggleTheme();
     })
 </script>
 
 <template>
-    <div class="fixed flex-center-full transition-1000 overflow-auto" 
+    <div class="fixed flex-center-full transition-1000 overflow-auto scroll-smooth" 
         :class="[globalStore.isDarkMode ? 'dark bg-dark-radial' : 'light bg-light-radial']">    
 
         <AppQuickActions/>

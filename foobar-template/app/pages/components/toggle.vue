@@ -1,18 +1,19 @@
 <script setup lang="ts">
-    const errorMessage = ref('Field is required.');
-    const errorAbsolute = ref(false);
-    const slim = ref(false);
+    const toggled = ref(false);
+    const altAnimation = ref(false);
 
     const propsRows = [
-        { name: 'errorMessage', type: 'string', required: false, description: 'Displayed validation/error text.' },
-        { name: 'errorAbsolute', type: 'boolean', required: false, description: 'Use absolute positioning mode.' },
-        { name: 'slim', type: 'boolean', required: false, description: 'Adjust vertical offset for compact fields.' },
+        { name: 'toggled', type: 'boolean', required: true, description: 'Current on/off state.' },
+        { name: 'toggledIcon', type: 'string', required: false, description: 'Icon shown for active state.' },
+        { name: 'unToggledIcon', type: 'string', required: false, description: 'Icon shown for inactive state.' },
+        { name: 'altAnimation', type: 'boolean', required: false, description: 'Cross-fade icon animation mode.' },
+        { name: 'onToggle', type: 'event', required: false, description: 'Emitted on click.' },
     ];
 
     const usageNotes = [
-        'Use this component when form fields need a consistent validation feedback style.',
-        'Prefer inline mode when surrounding layout should grow with error content.',
-        'Use absolute mode for compact overlays where vertical push should be avoided.',
+        'Use InputsToggle for compact binary actions like theme mode switching.',
+        'Keep icon pairs semantically opposite so state changes are obvious.',
+        'Use altAnimation when visual noise should be reduced in dense panels.',
     ];
 
     const pageSections = [
@@ -27,27 +28,27 @@
 <template>
     <DocsLayout>
         <template #main>
-            <article class="max-w-4xl space-y-6 text-sm text-TBD-text-dark dark:text-TBD-text-light">
+            <article class="space-y-6 text-sm text-TBD-text-dark dark:text-TBD-text-light">
                 <section id="overview" class="scroll-mt-8 space-y-2">
                     <div class="inline-flex items-center gap-1.5 rounded-full border border-TBD-primary-light/25 bg-TBD-primary-light/8 px-2 py-0.5 text-[10px] font-semibold text-TBD-primary-light dark:border-TBD-primary-dark/30 dark:bg-TBD-primary-dark/12 dark:text-TBD-primary-dark">
-                        <Icon name="tabler:alert-circle" class="text-xs"/>
-                        <span>&lt;InputsErrorMessage&gt;</span>
+                        <Icon name="tabler:toggle-left" class="text-xs"/>
+                        <span>&lt;InputsToggle&gt;</span>
                     </div>
-                    <h2 class="text-lg font-bold">InputsErrorMessage</h2>
-                    <p class="text-xs leading-5 opacity-85 sm:text-sm">InputsErrorMessage standardizes validation feedback across the input library. It supports animated inline expansion and absolute positioning for constrained layouts.</p>
+                    <h2 class="text-lg font-bold">InputsToggle</h2>
+                    <p class="text-xs leading-5 opacity-85 sm:text-sm">InputsToggle is an icon-first binary switch optimized for compact interfaces. It emits a simple click event while the parent owns and updates the toggled state.</p>
                 </section>
 
                 <section id="basic-usage" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
                     <h3 class="text-base font-bold">Basic Usage</h3>
-                    <p class="text-xs leading-5 opacity-85 sm:text-sm">Pass the current error text to `errorMessage`. Toggle `errorAbsolute` when you need the message to float without changing parent element height.</p>
+                    <p class="text-xs leading-5 opacity-85 sm:text-sm">Pass current state through `toggled` and listen to `onToggle` to flip that state in the parent. Optionally set custom icons and animation mode.</p>
 
                     <DocsCodeExample
                         eyebrow="Example"
                         title="Basic Template"
-                        description="Render error feedback in-place and switch to absolute mode when vertical space is constrained.">
-                        <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">&lt;InputsErrorMessage</span></span>
-                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">:error-message</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"errorMessage"</span></span>
-                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">:error-absolute</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"false"</span></span>
+                        description="Keep toggled state in the parent and handle onToggle to update it.">
+                        <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">&lt;InputsToggle</span></span>
+                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">:toggled</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"isDark"</span></span>
+                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">@on-toggle</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"isDark = !isDark"</span></span>
                         <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">/&gt;</span></span>
                     </DocsCodeExample>
                 </section>
@@ -64,14 +65,13 @@
                 <section id="live-example" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
                     <DocsPanel icon="tabler:beaker" eyebrow="Preview" title="Live Example" body-class="p-4">
                         <div class="grid gap-2 md:grid-cols-2">
-                            <InputsCheckBox slim v-model="errorAbsolute" label="Absolute" />
-                            <InputsCheckBox slim v-model="slim" label="Slim" />
-                            <InputsText slim name="docsErrorMessage" label="Message" v-model="errorMessage" />
+                            <InputsCheckBox slim v-model="toggled" label="Toggled" />
+                            <InputsCheckBox slim v-model="altAnimation" label="Alt Animation" />
                         </div>
 
-                        <div class="relative mt-4 max-w-md rounded-md border border-TBD-bg-dark/10 p-3 dark:border-TBD-bg-light/10">
-                            <p class="text-xs opacity-70">Demo field container</p>
-                            <InputsErrorMessage :error-message="errorMessage" :error-absolute="errorAbsolute" :slim="slim" />
+                        <div class="mt-4 flex items-center gap-3">
+                            <InputsToggle :toggled="toggled" :alt-animation="altAnimation" @on-toggle="toggled = !toggled" />
+                            <span class="text-xs opacity-75">State: {{ toggled ? 'On' : 'Off' }}</span>
                         </div>
                     </DocsPanel>
                 </section>
@@ -82,7 +82,7 @@
 
                 <section class="rounded-md border border-TBD-secondary-light/35 bg-TBD-secondary-light/10 px-3.5 py-3 text-xs leading-5 dark:border-TBD-secondary-dark/40 dark:bg-TBD-secondary-dark/15 sm:text-sm">
                     <p class="font-semibold text-TBD-secondary-light dark:text-TBD-secondary-dark">Testing Notes</p>
-                    <p class="mt-1.5 opacity-85">Compare inline and absolute modes with short and long error messages to confirm animation and spacing behave as expected.</p>
+                    <p class="mt-1.5 opacity-85">Verify icon swap timing for both animation modes and confirm parent-managed toggled state always stays in sync after repeated clicks.</p>
                 </section>
             </article>
         </template>

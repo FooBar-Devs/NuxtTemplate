@@ -16,7 +16,7 @@
 
 		<!-- REQUIRED MARK (when label exists) -->
 		<span v-if="required && label != ' ' && label" 
-            class="relative text-TBD-error-light -top-1.5">
+            class="relative text-TBD-error-light dark:text-TBD-error-dark -top-1.5">
 
 			<span class="text-lg absolute">*</span>
 
@@ -33,7 +33,7 @@
 
 			<!-- REQUIRED MARK (fallback when no label, only description) -->
 			<span v-if="required && (label == ' ' || !label)" 
-                class="relative text-TBD-error-light -top-1.5">
+                class="relative text-TBD-error-light dark:text-TBD-error-dark -top-1.5">
 
 				<span class="text-lg absolute">*</span>
                 

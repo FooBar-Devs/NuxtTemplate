@@ -8,7 +8,7 @@
 </script>
 
 <template>
-    <DocsPanel :eyebrow="eyebrow" :title="title" tone="contrast" :sticky="sticky" body-class="p-0">
+    <DocsPanel :eyebrow="eyebrow" :title="title" tone="primary" :sticky="sticky" body-class="p-0">
         <template #header-right>
             <div class="flex items-center gap-3 text-[11px] opacity-70">
                 <span class="size-3 ring-1 ring-TBD-bg-light dark:ring-TBD-bg-dark  rounded-full bg-TBD-error-light dark:bg-TBD-error-dark"/>

@@ -30,7 +30,7 @@
 <template>
     <DocsLayout>
         <template #main>
-            <article class="max-w-4xl space-y-6 text-sm text-TBD-text-dark dark:text-TBD-text-light">
+            <article class="space-y-6 text-sm text-TBD-text-dark dark:text-TBD-text-light">
                 <section id="overview" class="scroll-mt-8 space-y-2">
                     <div class="inline-flex items-center gap-1.5 rounded-full border border-TBD-primary-light/25 bg-TBD-primary-light/8 px-2 py-0.5 text-[10px] font-semibold text-TBD-primary-light dark:border-TBD-primary-dark/30 dark:bg-TBD-primary-dark/12 dark:text-TBD-primary-dark">
                         <Icon name="tabler:chevron-left" class="text-xs"/>

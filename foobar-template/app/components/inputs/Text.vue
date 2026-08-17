@@ -1,27 +1,31 @@
 <script setup lang="ts">
     const props = defineProps({
         // v-model value
-        modelValue:    { type: [String, Number], default: "" },
+        modelValue:    { type: [String, Number], default: "", required: true },
 
         // input interaction props
-        disabled:      { type: Boolean, default: false },       // disables input interaction
-        readonly:      { type: Boolean, default: false },       // read-only mode (no editing)
+        disabled:      { type: Boolean, default: false, required: false },        // disables input interaction
+        readonly:      { type: Boolean, default: false, required: false },        // read-only mode (no editing)
         
         // form field props
-        required:      { type: Boolean, default: false },       // marks field as required
-        name:          { type: String, required: true },        // input name/id (also used for form + validation)
-        label:         { type: String, default: "" },           // label text above input
-        description:   { type: String, default: "" },           // optional helper text under label
-        errorAbsolute: { type: Boolean, default: false },       // error message positioning mode
+        required:      { type: Boolean, default: false,        required: false }, // marks field as required
+        name:          { type: String,  default: "nameNeeded", required: true },  // input name/id (also used for form + validation)
+        label:         { type: String,  default: "",           required: false }, // label text above input
+        description:   { type: String,  default: "",           required: false }, // helper text under label
+        errorAbsolute: { type: Boolean, default: false,        required: false }, // error message positioning mode
         
         // optional icon & compact mode
-        icon:          { type: String, default: "" },
-        slim:          { type: Boolean, default: false },
+        icon:          { type: String, default: "",     required: false },        // Iconify icon
+        slim:          { type: Boolean, default: false, required: false },        // alternative compact style
 
         // input behavior props
-        placeholder:   { type: String, default: "" },           // placeholder text shown when empty
-        maxlength:     { type: Number, default: 64 },           // max allowed input length
-        onkeypress:    { type: Function as PropType<(event: KeyboardEvent) => void> }, // custom keypress handler
+        placeholder:   { type: String, default: "",  required: false },           // placeholder text shown when empty
+        maxlength:     { type: Number, default: 64,  required: false },           // max allowed input length
+        onkeypress:    {                                                          // custom keypress handler
+            type: Function as PropType<(event: KeyboardEvent) => void>, 
+            default: () => {},
+            required: false 
+        }, 
     });
 
     // reactive reference to field name

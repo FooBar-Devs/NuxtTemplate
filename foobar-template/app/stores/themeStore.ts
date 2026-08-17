@@ -63,6 +63,20 @@ export const useThemeStore = defineStore('themeStore', () => {
         setRootStyle();
     };
 
+    const cycleThemes = async (): Promise<void> => {
+        const colorThemes = uiSettings.value.colorThemes.concat(defaultColorThemes);
+        const currentIndex = colorThemes.findIndex((ct) => ct.name == selectedTheme.value.name);
+        const nextIndex = (currentIndex + 1) % colorThemes.length;
+        const nextTheme = colorThemes[nextIndex];
+        if (nextTheme) {
+            selectedTheme.value = JSONIFY(nextTheme) as ColorTheme;
+            defaultTheme.value = JSONIFY(nextTheme) as ColorTheme;
+        }
+        setRootStyle();
+        toggleTheme();
+        toggleTheme();
+    }
+
     const setRootStyle = () => {
         const variant = isDarkMode.value ? 'dark' : 'light';
         selectedTheme.value.colors[variant].forEach((color) => {
@@ -256,6 +270,7 @@ export const useThemeStore = defineStore('themeStore', () => {
         getDefaultColorValue,
         applyColorsToRoot,
         toggleTheme,
+        cycleThemes,
         setRootStyle,
         updateStyle,
         selectTheme,

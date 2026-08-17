@@ -1,18 +1,14 @@
 <script setup lang="ts">
-    const label = ref('Display Name');
-    const description = ref('Shown under the label as helper text.');
-    const required = ref(true);
+    const image = ref('https://upload.wikimedia.org/wikipedia/sco/7/70/Bob_at_Easel.jpg');
 
     const propsRows = [
-        { name: 'label', type: 'string', required: false, description: 'Primary label content.' },
-        { name: 'description', type: 'string', required: false, description: 'Secondary helper line.' },
-        { name: 'required', type: 'boolean', required: false, description: 'Shows required star marker.' },
+        { name: 'image', type: 'string', required: true, description: 'Image URL/path used for preview background.' },
     ];
 
     const usageNotes = [
-        'Use this for consistent form labeling across custom and built-in inputs.',
-        'Display description text when extra context helps reduce input mistakes.',
-        'Enable required marker only for truly mandatory fields to avoid visual noise.',
+        'Use this for thumbnail previews in media selectors and theme image pickers.',
+        'Provide stable image paths so preview refresh remains responsive while typing.',
+        'Rely on automatic pixel-art detection for low-resolution sprite assets.',
     ];
 
     const pageSections = [
@@ -27,27 +23,26 @@
 <template>
     <DocsLayout>
         <template #main>
-            <article class="max-w-4xl space-y-6 text-sm text-TBD-text-dark dark:text-TBD-text-light">
+            <article class="space-y-6 text-sm text-TBD-text-dark dark:text-TBD-text-light">
                 <section id="overview" class="scroll-mt-8 space-y-2">
                     <div class="inline-flex items-center gap-1.5 rounded-full border border-TBD-primary-light/25 bg-TBD-primary-light/8 px-2 py-0.5 text-[10px] font-semibold text-TBD-primary-light dark:border-TBD-primary-dark/30 dark:bg-TBD-primary-dark/12 dark:text-TBD-primary-dark">
-                        <Icon name="tabler:abc" class="text-xs"/>
-                        <span>&lt;InputsLabel&gt;</span>
+                        <Icon name="tabler:photo" class="text-xs"/>
+                        <span>&lt;InputsImagePreview&gt;</span>
                     </div>
-                    <h2 class="text-lg font-bold">InputsLabel</h2>
-                    <p class="text-xs leading-5 opacity-85 sm:text-sm">InputsLabel standardizes how field titles, helper descriptions, and required indicators are rendered across the input system.</p>
+                    <h2 class="text-lg font-bold">InputsImagePreview</h2>
+                    <p class="text-xs leading-5 opacity-85 sm:text-sm">InputsImagePreview is a fixed-size visual preview block that displays an image path and automatically switches rendering style for pixel-art assets.</p>
                 </section>
 
                 <section id="basic-usage" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
                     <h3 class="text-base font-bold">Basic Usage</h3>
-                    <p class="text-xs leading-5 opacity-85 sm:text-sm">Provide `label` and optional `description`, then set `required` when the field must be completed. Use slots for advanced composed label content.</p>
+                    <p class="text-xs leading-5 opacity-85 sm:text-sm">Pass an image URL through the `image` prop. Keep the preview near its related path input so users can instantly verify assets and style choices.</p>
 
                     <DocsCodeExample
                         eyebrow="Example"
                         title="Basic Template"
-                        description="Use InputsLabel as a shared text layer for field titles, helper content, and required indicators.">
-                        <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">&lt;InputsLabel</span></span>
-                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">label</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"Display Name"</span></span>
-                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">:required</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"true"</span></span>
+                        description="Bind a path and render a fixed preview block with automatic rendering-style detection.">
+                        <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">&lt;InputsImagePreview</span></span>
+                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">:image</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"imagePath"</span></span>
                         <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">/&gt;</span></span>
                     </DocsCodeExample>
                 </section>
@@ -63,14 +58,14 @@
 
                 <section id="live-example" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
                     <DocsPanel icon="tabler:beaker" eyebrow="Preview" title="Live Example" body-class="p-4">
-                        <div class="grid gap-2 md:grid-cols-2">
-                            <InputsText slim name="docsLabelText" label="Label" v-model="label" />
-                            <InputsText slim name="docsLabelDescription" label="Description" v-model="description" />
-                            <InputsCheckBox slim v-model="required" label="Required" />
-                        </div>
-
-                        <div class="mt-4 max-w-md rounded-md border border-TBD-bg-dark/10 p-3 dark:border-TBD-bg-light/10">
-                            <InputsLabel :label="label" :description="description" :required="required" />
+                        <div class="max-w-md space-y-3">
+                            <InputsText
+                                slim
+                                name="docsImagePreview"
+                                label="Image path"
+                                description="Try any public path"
+                                v-model="image" />
+                            <InputsImagePreview :image="image" />
                         </div>
                     </DocsPanel>
                 </section>
@@ -81,7 +76,7 @@
 
                 <section class="rounded-md border border-TBD-secondary-light/35 bg-TBD-secondary-light/10 px-3.5 py-3 text-xs leading-5 dark:border-TBD-secondary-dark/40 dark:bg-TBD-secondary-dark/15 sm:text-sm">
                     <p class="font-semibold text-TBD-secondary-light dark:text-TBD-secondary-dark">Testing Notes</p>
-                    <p class="mt-1.5 opacity-85">Verify label fallback behavior with empty title, long description wrapping, and required marker positioning.</p>
+                    <p class="mt-1.5 opacity-85">Try both sprite-like and high-resolution images to confirm rendering mode changes and preview containment remain stable.</p>
                 </section>
             </article>
         </template>

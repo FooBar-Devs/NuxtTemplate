@@ -54,9 +54,11 @@
 }
 
 /* SCROLLBAR */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+@layer base {
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
 }
 ::-webkit-scrollbar-thumb {
     background: var(--color-TBD-thumb);

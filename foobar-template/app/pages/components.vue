@@ -3,79 +3,79 @@
 
     const pageInfo = computed(() => {
         switch (route.path) {
-            case '/testing/textinput':
+            case '/components/textinput':
                 return {
                     eyebrow: 'Components / Forms',
                     title: 'Text Input',
                     summary: 'Single-line field documentation with prop reference, usage guidance, and a live playground for testing validation, spacing, icons, and state handling.',
                 };
-            case '/testing/checkbox':
+            case '/components/checkbox':
                 return {
                     eyebrow: 'Components / Forms',
                     title: 'CheckBox',
                     summary: 'Boolean field documentation with usage patterns, prop reference, and a live playground for spacing, warnings, and visibility states.',
                 };
-            case '/testing/numberinput':
+            case '/components/numberinput':
                 return {
                     eyebrow: 'Components / Forms',
                     title: 'Number Input',
                     summary: 'Numeric field documentation with bounds, stepping controls, and live behavior testing.',
                 };
-            case '/testing/textarea':
+            case '/components/textarea':
                 return {
                     eyebrow: 'Components / Forms',
                     title: 'Text Area',
                     summary: 'Multiline input documentation for long text values, limits, and state variations.',
                 };
-            case '/testing/dropdown':
+            case '/components/dropdown':
                 return {
                     eyebrow: 'Components / Forms',
                     title: 'Dropdown',
                     summary: 'Selection input docs with object mapping, placeholder behavior, and viewport-aware list positioning.',
                 };
-            case '/testing/toggle':
+            case '/components/toggle':
                 return {
                     eyebrow: 'Components / Controls',
                     title: 'Toggle',
                     summary: 'Compact icon toggle documentation with animation variants and emitted click handling.',
                 };
-            case '/testing/button':
+            case '/components/button':
                 return {
                     eyebrow: 'Components / Actions',
                     title: 'Button',
                     summary: 'Action button docs covering style variants, compact mode, and hover behavior.',
                 };
-            case '/testing/collapsebutton':
+            case '/components/collapsebutton':
                 return {
                     eyebrow: 'Components / Controls',
                     title: 'Collapse Button',
                     summary: 'Directional collapse trigger docs with disabled state and rotation variants.',
                 };
-            case '/testing/color':
+            case '/components/color':
                 return {
                     eyebrow: 'Components / Theme',
                     title: 'Color',
                     summary: 'Color swatch and picker trigger documentation used for theme editing flows.',
                 };
-            case '/testing/errormessage':
+            case '/components/errormessage':
                 return {
                     eyebrow: 'Components / Feedback',
                     title: 'Error Message',
                     summary: 'Validation feedback component docs with inline and absolute display modes.',
                 };
-            case '/testing/imagepreview':
+            case '/components/imagepreview':
                 return {
                     eyebrow: 'Components / Media',
                     title: 'Image Preview',
                     summary: 'Image thumbnail preview documentation with automatic pixel-art rendering behavior.',
                 };
-            case '/testing/inputwrapper':
+            case '/components/inputwrapper':
                 return {
                     eyebrow: 'Components / Forms',
                     title: 'Input Wrapper',
                     summary: 'Field wrapper docs for composing label, custom input content, and error handling.',
                 };
-            case '/testing/label':
+            case '/components/label':
                 return {
                     eyebrow: 'Components / Forms',
                     title: 'Label',
@@ -99,18 +99,18 @@
 
         <NuxtPage
             :page-key="(r) => r.path"
-            :transition="{ name: 'testing-page', mode: 'out-in' }"/>
+            :transition="{ name: 'components-page', mode: 'out-in' }"/>
     </DocsAppShell>
 </template>
 
 <style scoped>
-    .testing-page-enter-active,
-    .testing-page-leave-active {
+    .components-page-enter-active,
+    .components-page-leave-active {
         transition: opacity 180ms ease, transform 180ms ease;
     }
 
-    .testing-page-enter-from,
-    .testing-page-leave-to {
+    .components-page-enter-from,
+    .components-page-leave-to {
         opacity: 0;
         transform: translateY(6px);
     }
