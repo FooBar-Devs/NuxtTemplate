@@ -69,6 +69,13 @@
             default: '',
             required: false,
         },
+        { 
+            property: 'placeholder',  
+            description: 'Placeholder text shown when empty.',         
+            type: 'string', 
+            default: '',
+            required: false, 
+        },
         {
             property: 'errorAbsolute',
             description: 'Error message positioning mode.',
@@ -116,13 +123,6 @@
             description: 'Maximum textarea height, -1 = no limit.',
             type: 'number',
             default: -1,
-            required: false,
-        },
-        {
-            property: 'placeholder',
-            description: 'Placeholder text shown when empty.',
-            type: 'string',
-            default: '',
             required: false,
         },
         {
@@ -284,13 +284,13 @@ const onkeypressExampleFun = (event: KeyboardEvent) => {
                                 <InputsNumber slim label="Min height" v-model="minheight" name="textAreaMinheight" :min="0"/>
                                 <InputsNumber slim label="Max height" v-model="maxheight" name="textAreaMaxheight" :min="0"/>
 
-                                <InputsCheckBox slim v-model="required" label="Required"/>
-                                <InputsCheckBox slim v-model="disabled" label="Disabled"/>
-                                <InputsCheckBox slim v-model="readonly" label="Readonly"/>
-                                <InputsCheckBox slim v-model="slim" label="Slim"/>
-                                <InputsCheckBox slim v-model="showCounter" label="Show Counter"/>
-                                <InputsCheckBox slim v-model="outsideCounter" label="Outside Counter"/>
-                                <InputsCheckBox slim v-model="errorAbsolute" label="Error Absolute" class="col-span-2"/>
+                                <InputsCheckBox slim v-model="required" label="Required" name="textAreaRequired"/>
+                                <InputsCheckBox slim v-model="disabled" label="Disabled" name="textAreaDisabled"/>
+                                <InputsCheckBox slim v-model="readonly" label="Readonly" name="textAreaReadonly"/>
+                                <InputsCheckBox slim v-model="slim" label="Slim" name="textAreaSlim"/>
+                                <InputsCheckBox slim v-model="showCounter" label="Show Counter" name="textAreaShowCounter"/>
+                                <InputsCheckBox slim v-model="outsideCounter" label="Outside Counter" name="textAreaOutsideCounter"/>
+                                <InputsCheckBox slim v-model="errorAbsolute" label="Error Absolute" class="col-span-2" name="textAreaErrorAbsolute"/>
                             </div>
                         </div>
                     </DocsPanel>
@@ -298,31 +298,28 @@ const onkeypressExampleFun = (event: KeyboardEvent) => {
                     <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Textarea" body-class="p-4" class="col-span-2">
 
                         <Form :validation-schema="schema" @submit="onSubmit" @invalid-submit="onInvalidSubmit">
+                            <InputsTextArea
+                                v-model="textAreaValue"
+                                :slim="slim"
+                                :required="required"
+                                :maxlength="maxlength"
+                                :name="name"
+                                :placeholder="placeholder"
+                                :label="label"
+                                :description="description"
+                                :height="height"
+                                :minheight="minheight"
+                                :maxheight="maxheight"
+                                :errorAbsolute="errorAbsolute"
+                                :show-counter="showCounter"
+                                :outside-counter="outsideCounter"
+                                :disabled="disabled"
+                                :readonly="readonly"
+                            />
 
-                            <div class="max-w-xl">
-                                <InputsTextArea
-                                    v-model="textAreaValue"
-                                    :slim="slim"
-                                    :required="required"
-                                    :maxlength="maxlength"
-                                    :name="name"
-                                    :placeholder="placeholder"
-                                    :label="label"
-                                    :description="description"
-                                    :height="height"
-                                    :minheight="minheight"
-                                    :maxheight="maxheight"
-                                    :errorAbsolute="errorAbsolute"
-                                    :show-counter="showCounter"
-                                    :outside-counter="outsideCounter"
-                                    :disabled="disabled"
-                                    :readonly="readonly"
-                                />
-
-                                <InputsButton class="mt-3" slim type="submit">
-                                    Submit
-                                </InputsButton>
-                            </div>
+                            <InputsButton class="mt-3" slim type="submit">
+                                Submit
+                            </InputsButton>
                         </Form>
                     </DocsPanel>
                 </div>

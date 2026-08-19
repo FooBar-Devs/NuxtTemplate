@@ -12,6 +12,7 @@
         name:          { type: String,  default: "nameNeeded", required: true },  // input name/id (also used for form + validation)
         label:         { type: String,  default: "",           required: false }, // label text above input
         description:   { type: String,  default: "",           required: false }, // helper text under label
+        placeholder:   { type: String, default: "",  required: false },           // placeholder text shown when empty
         errorAbsolute: { type: Boolean, default: false,        required: false }, // error message positioning mode
         
         // optional icon & compact mode
@@ -19,7 +20,6 @@
         slim:          { type: Boolean, default: false, required: false },        // alternative compact style
 
         // input behavior props
-        placeholder:   { type: String, default: "",  required: false },           // placeholder text shown when empty
         maxlength:     { type: Number, default: 64,  required: false },           // max allowed input length
         onkeypress:    {                                                          // custom keypress handler
             type: Function as PropType<(event: KeyboardEvent) => void>, 

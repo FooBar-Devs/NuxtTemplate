@@ -31,7 +31,7 @@
             required: false, 
         },
         { 
-            property: 'readonly',  
+            property: 'readonly',
             description: '"read-only" mode (no editing).', 
             type: 'boolean', 
             default: false,
@@ -66,6 +66,13 @@
             required: false,
         },
         { 
+            property: 'placeholder',  
+            description: 'Placeholder text shown when empty.',         
+            type: 'string', 
+            default: '',
+            required: false, 
+        },
+        { 
             property: 'errorAbsolute',  
             description: 'Error message positioning mode.',       
             type: 'boolean', 
@@ -84,13 +91,6 @@
             description: 'Alternative compact style.',              
             type: 'boolean', 
             default: false,
-            required: false, 
-        },
-        { 
-            property: 'placeholder',  
-            description: 'Placeholder text shown when empty.',         
-            type: 'string', 
-            default: '',
             required: false, 
         },
         { 
@@ -259,39 +259,38 @@ const onkeypressExampleFun = (event: KeyboardEvent) => {
                                 <InputsText :maxlength="100" slim label="Description" v-model="description" name="description" class="col-span-2"/>
                                 <InputsText :maxlength="100" slim label="Placeholder" v-model="placeholder" name="placeholder" class="col-span-2"/>
                                 <InputsText :maxlength="100" slim label="Icon" v-model="icon" name="icon"/>
+                                
                                 <InputsNumber slim label="Maxlength" v-model="maxlength" name="maxlength"/>
 
-                                <InputsCheckBox slim v-model="required" label="Required"/>
-                                <InputsCheckBox slim v-model="disabled" label="Disabled"/>
-                                <InputsCheckBox slim v-model="readonly" label="Readonly"/>
-                                <InputsCheckBox slim v-model="slim" label="Slim"/>
-                                <InputsCheckBox slim v-model="errorAbsolute" label="Error Absolute" class="col-span-2"/>
+                                <InputsCheckBox slim v-model="required" label="Required" name="required"/>
+                                <InputsCheckBox slim v-model="disabled" label="Disabled" name="disabled"/>
+                                <InputsCheckBox slim v-model="readonly" label="Readonly" name="readonly"/>
+                                <InputsCheckBox slim v-model="slim" label="Slim" name="slim"/>
+                                <InputsCheckBox slim v-model="errorAbsolute" label="Error Absolute" name="errorAbsolute" class="col-span-2"/>
                             </div>
                         </div>
                     </DocsPanel>
 
                     <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Field" body-class="p-4" class="col-span-2">
                         <Form :validation-schema="schema" @submit="onSubmit" @invalid-submit="onInvalidSubmit">
-                            <div class="max-w-xl">
-                                <InputsText
-                                    v-model="textValue"
-                                    :slim="slim"
-                                    :required="required"
-                                    :maxlength="maxlength"
-                                    :name="name"
-                                    :placeholder="placeholder"
-                                    :label="label"
-                                    :description="description"
-                                    :icon="icon"
-                                    :errorAbsolute="errorAbsolute"
-                                    :disabled="disabled"
-                                    :readonly="readonly"
-                                />
+                            <InputsText
+                                v-model="textValue"
+                                :slim="slim"
+                                :required="required"
+                                :maxlength="maxlength"
+                                :name="name"
+                                :placeholder="placeholder"
+                                :label="label"
+                                :description="description"
+                                :icon="icon"
+                                :errorAbsolute="errorAbsolute"
+                                :disabled="disabled"
+                                :readonly="readonly"
+                            />
 
-                                <InputsButton class="mt-3" slim type="submit">
-                                    Submit
-                                </InputsButton>
-                            </div>
+                            <InputsButton class="mt-3" slim type="submit">
+                                Submit
+                            </InputsButton>
                         </Form>
                     </DocsPanel>
                 </div>

@@ -75,6 +75,12 @@
         { id: 'props', title: 'Props' },
         { id: 'methods', title: 'Methods' },
     ];
+
+    const basicUsageExample = `
+<InputsButton slim outline underline color="confirm">
+    Save Changes
+</InputsButton>`;
+
 </script>
 
 <template>
@@ -98,14 +104,7 @@
                     eyebrow="Example"
                     title="Basic Template"
                     description="Use InputsButton for primary actions, then layer style props for visual priority and compactness.">
-                    <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">&lt;InputsButton</span>
-                    <span class="text-TBD-secondary-light dark:text-TBD-secondary-dark"> slim outline underline</span>
-                    <span class="text-TBD-secondary-light dark:text-TBD-secondary-dark"> :color</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"confirm"</span>
-                        <span class="text-TBD-primary-light dark:text-TBD-primary-dark">&gt;</span>
-                    </span>
-                    <span class="block">
-                        Save Changes
-                    <br><span class="text-TBD-primary-light dark:text-TBD-primary-dark">&lt;/InputsButton&gt;</span></span>
+                    {{ basicUsageExample }}
                 </DocsCodeExample>
 
                 <InputsButton slim outline underline color="confirm">
@@ -166,9 +165,9 @@
                     
                     <DocsPanel icon="tabler:adjustments-horizontal" eyebrow="Playground" title="Controls" body-class="p-4">
                         <div class="grid gap-3 md:grid-cols-2">
-                            <InputsCheckBox slim v-model="slim" label="Slim"/>
-                            <InputsCheckBox slim v-model="outline" label="Outline"/>
-                            <InputsCheckBox slim v-model="underline" label="Text hover underline" class="col-span-2"/>
+                            <InputsCheckBox slim v-model="slim" label="Slim" name="buttonSlim"/>
+                            <InputsCheckBox slim v-model="outline" label="Outline" name="buttonOutline"/>
+                            <InputsCheckBox slim v-model="underline" label="Text hover underline" class="col-span-2" name="buttonUnderline"/>
                             <InputsDropdown v-model="color" slim name="buttonBackground" label="Color" class="col-span-2"
                                 :list="['primary', 'error', 'warning', 'confirm', 'neutral']" :showItemsAmount="5"/>
                             <InputsNumber v-model="buttonDisableTime" slim name="buttonDisableTime" label="Disable time" description="(in seconds)"

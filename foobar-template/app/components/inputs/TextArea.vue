@@ -12,6 +12,7 @@
         name:          { type: String,  default: "nameNeeded", required: true },  // textarea name/id
         label:         { type: String,  default: "",           required: false }, // label text above textarea
         description:   { type: String,  default: "",           required: false }, // helper text under label
+        placeholder: { type: String, default: "",  required: false },             // placeholder text shown when empty
         errorAbsolute: { type: Boolean, default: false,        required: false }, // error message positioning mode
 
         // optional counter & compact mode
@@ -25,7 +26,6 @@
         maxheight:   { type: Number, default: -1,  required: false },             // max textarea height, -1 = no limit
 
         // textarea behavior props
-        placeholder: { type: String, default: "",  required: false },             // placeholder text shown when empty
         maxlength:   { type: Number, default: 300, required: false },             // max allowed input length
         onkeypress:  {                                                            // custom keypress handler
             type: Function as PropType<(event: KeyboardEvent) => void>,

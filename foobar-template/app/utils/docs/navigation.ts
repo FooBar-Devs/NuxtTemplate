@@ -32,7 +32,7 @@ export const docsSections: DocsNavSection[] = [
                 status: 'ready',
             },
             {
-                title: 'Text Area',
+                title: 'Text Area Input',
                 description: 'Multi-line input with auto-resizing, max length, and vee-validate integration.',
                 path: '/components/inputs/textarea',
                 status: 'ready',
@@ -41,13 +41,13 @@ export const docsSections: DocsNavSection[] = [
                 title: 'Number Input',
                 description: 'Single-line input with increment/decrement buttons, wheel support & vee-validate integration.',
                 path: '/components/inputs/number',
-                status: 'in-progress',
+                status: 'ready',
             },
             {
-                title: 'CheckBox',
-                description: 'Boolean input patterns, warning states, and label behavior.',
+                title: 'Checkbox Input',
+                description: 'Single-line checkbox input with vee-validate integration.',
                 path: '/components/inputs/checkbox',
-                status: 'in-progress',
+                status: 'needs-review',
             },
             {
                 title: 'Dropdown',

@@ -1,14 +1,20 @@
 <script setup lang="ts">
     const props = defineProps({
-        label:       { type: String, default: " " },    // main label text (space means "empty")
-        description: { type: String, default: " " },    // helper/description text
-        required:    { type: Boolean, default: false }, // shows required indicator (*)
-        slim:        { type: Boolean, default: false }, // compact input variant
+        label:                { type: String, default: " " },    // main label text (space means "empty")
+        description:          { type: String, default: " " },    // helper/description text
+        required:             { type: Boolean, default: false }, // shows required indicator (*)
+        slim:                 { type: Boolean, default: false }, // compact input variant
+        descriptionClass:     { type: String, default: "" },     // custom description classes
+        descriptionMarkClass: { type: String, default: "" },     // custom description required mark classes
     });
 </script>
 
 <template>
-	<div v-if="label != ' ' || description != ' '" class="font-bold relative transition-300">
+	<div v-if="label != ' ' || description != ' '" class="font-bold relative transition-300"
+        :class="[
+            slim ? 'text-xs' : 'text-sm',
+            description == ' ' || description == '' ? (slim ? '-mb-0.5' : '-mb-1') : ''
+        ]">
 
 		<!-- MAIN LABEL TEXT -->
 		{{ label }}
@@ -27,7 +33,10 @@
 		<!-- DESCRIPTION / HELPER TEXT -->
 		<div v-if="description != ' ' && description" 
             class="relative font-normal opacity-75 transition-300"
-            :class="label != ' ' && label ? 'top-0.75' : '-top-0.75'">
+            :class="[
+                descriptionClass,
+                label != ' ' && label ? 'top-0.75' : '-top-0.75'
+            ]">
 
 			{{ description }}
 
@@ -36,7 +45,10 @@
 			<!-- REQUIRED MARK (fallback when no label, only description) -->
 			<span v-if="required && (label == ' ' || !label)" 
                 class="relative text-TBD-error-light dark:text-TBD-error-dark transition-300"
-                :class="slim ? '-top-1.75' : '-top-1.25'">
+                :class="[
+                    descriptionMarkClass,
+                    slim ? '-top-1.75' : '-top-1.25'
+                ]">
 
 				<span class="text-lg absolute transition-300">*</span>
                 

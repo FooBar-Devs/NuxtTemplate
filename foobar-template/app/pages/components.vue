@@ -7,25 +7,25 @@
                 return {
                     eyebrow: 'Components / Inputs',
                     title: 'Text Input',
-                    summary: 'Single-line field documentation with prop reference, usage guidance, and a live playground for testing validation, spacing, icons, and state handling.',
+                    summary: 'Single-line text input documentation with validation, label, and description handling.',
                 };
             case '/components/inputs/checkbox':
                 return {
                     eyebrow: 'Components / Inputs',
-                    title: 'CheckBox',
-                    summary: 'Boolean field documentation with usage patterns, prop reference, and a live playground for spacing, warnings, and visibility states.',
+                    title: 'Checkbox Input',
+                    summary: 'Single-line checkbox input with vee-validate integration.',
                 };
             case '/components/inputs/number':
                 return {
                     eyebrow: 'Components / Inputs',
                     title: 'Number Input',
-                    summary: 'Numeric field documentation with bounds, stepping controls, and live behavior testing.',
+                    summary: 'Single-line number input documentation with min/max limits, step increments, and validation handling.',
                 };
             case '/components/inputs/textarea':
                 return {
                     eyebrow: 'Components / Inputs',
-                    title: 'Text Area',
-                    summary: 'Multiline input documentation for long text values, limits, and state variations.',
+                    title: 'Text Area Input',
+                    summary: 'Multi-line text area documentation with auto-resizing, validation, and label/description handling.',
                 };
             case '/components/inputs/dropdown':
                 return {
