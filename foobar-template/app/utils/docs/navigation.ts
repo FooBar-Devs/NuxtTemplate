@@ -1,7 +1,6 @@
 export interface DocsNavItem {
     title: string;
     description: string;
-    icon: string;
     path?: string;
     status: 'ready' | 'planned' | 'needs-review' | 'in-progress';
 }
@@ -18,7 +17,6 @@ export const docsSections: DocsNavSection[] = [
             {
                 title: 'Overview',
                 description: 'Browse the component docs, examples, and testing pages.',
-                icon: 'tabler:home-2',
                 path: '/components',
                 status: 'needs-review',
             },
@@ -30,95 +28,93 @@ export const docsSections: DocsNavSection[] = [
             {
                 title: 'Text Input',
                 description: 'Single-line input with vee-validate integration.',
-                icon: 'tabler:text-size',
-                path: '/components/textinput',
-                status: 'needs-review',
+                path: '/components/inputs/text',
+                status: 'ready',
+            },
+            {
+                title: 'Text Area',
+                description: 'Multi-line input with auto-resizing, max length, and vee-validate integration.',
+                path: '/components/inputs/textarea',
+                status: 'ready',
             },
             {
                 title: 'Number Input',
                 description: 'Single-line input with increment/decrement buttons, wheel support & vee-validate integration.',
-                icon: 'tabler:123',
-                path: '/components/numberinput',
-                status: 'in-progress',
-            },
-            {
-                title: 'Text Area',
-                description: 'Multiline input documentation and examples.',
-                icon: 'tabler:align-box-left-stretch',
-                path: '/components/textarea',
-                status: 'in-progress',
-            },
-            {
-                title: 'Dropdown',
-                description: 'Selection list patterns, examples, and behavior notes.',
-                icon: 'tabler:selector',
-                path: '/components/dropdown',
+                path: '/components/inputs/number',
                 status: 'in-progress',
             },
             {
                 title: 'CheckBox',
                 description: 'Boolean input patterns, warning states, and label behavior.',
-                icon: 'tabler:checkbox',
-                path: '/components/checkbox',
+                path: '/components/inputs/checkbox',
                 status: 'in-progress',
             },
             {
-                title: 'Toggle',
-                description: 'Compact binary switch with icon animations.',
-                icon: 'tabler:toggle-left',
-                path: '/components/toggle',
-                status: 'in-progress',
-            },
-            {
-                title: 'Button',
-                description: 'Action variants, states, and usage guidance.',
-                icon: 'tabler:rectangle-rounded-top',
-                path: '/components/button',
-                status: 'ready',
-            },
-            {
-                title: 'Collapse Button',
-                description: 'Directional compact trigger for collapsible UI panels.',
-                icon: 'tabler:chevron-left',
-                path: '/components/collapsebutton',
+                title: 'Dropdown',
+                description: 'Selection list patterns, examples, and behavior notes.',
+                path: '/components/inputs/dropdown',
                 status: 'in-progress',
             },
             {
                 title: 'Color',
                 description: 'Color picker trigger used by theme editing surfaces.',
-                icon: 'tabler:palette',
-                path: '/components/color',
+                path: '/components/inputs/color',
                 status: 'in-progress',
-            },
-            {
-                title: 'Error Message',
-                description: 'Animated validation feedback component.',
-                icon: 'tabler:alert-circle',
-                path: '/components/errormessage',
-                status: 'needs-review',
-            },
-            {
-                title: 'Image Preview',
-                description: 'Square image preview with pixel-art detection.',
-                icon: 'tabler:photo',
-                path: '/components/imagepreview',
-                status: 'in-progress',
-            },
-            {
-                title: 'Input Wrapper',
-                description: 'Shared field wrapper for label, input, and error.',
-                icon: 'tabler:box-padding',
-                path: '/components/inputwrapper',
-                status: 'needs-review',
             },
             {
                 title: 'Label',
                 description: 'Reusable field label with description and required marker.',
-                icon: 'tabler:abc',
-                path: '/components/label',
+                path: '/components/inputs/label',
+                status: 'needs-review',
+            },
+            {
+                title: 'Error Message',
+                description: 'Animated validation feedback component.',
+                path: '/components/inputs/errormessage',
+                status: 'needs-review',
+            },
+            {
+                title: 'Input Wrapper',
+                description: 'Shared field wrapper for label, input, and error.',
+                path: '/components/inputs/wrapper',
                 status: 'needs-review',
             },
         ],
+    },
+    {
+        title: 'Buttons',
+        items: [
+            {
+                title: 'Button',
+                description: 'Action variants, states, and usage guidance.',
+                path: '/components/buttons',
+                status: 'ready',
+            },
+            {
+                title: 'Toggle',
+                description: 'Compact binary switch with icon animations.',
+                path: '/components/buttons/toggle',
+                status: 'in-progress',
+            },
+            {
+                title: 'Collapse Button',
+                description: 'Directional compact trigger for collapsible UI panels.',
+                path: '/components/buttons/collapse',
+                status: 'in-progress',
+            },
+        ]
+    }, 
+    {
+        title: 'Images',
+        items: [
+
+            {
+                title: 'Image Preview',
+                description: 'Square image preview with pixel-art detection.',
+                path: '/components/images/preview',
+                status: 'in-progress',
+            },
+        ]
     },
 ];
 

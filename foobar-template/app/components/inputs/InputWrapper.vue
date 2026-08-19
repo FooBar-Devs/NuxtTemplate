@@ -17,7 +17,7 @@
         ]">
 
         <!-- LABEL -->
-        <InputsLabel :label="label" :description="description" :required="required">
+        <InputsLabel :label="label" :description="description" :required="required" :slim="slim">
             <template #label> <slot name="label"/> </template>
             <template #description> <slot name="description"/> </template>
         </InputsLabel>

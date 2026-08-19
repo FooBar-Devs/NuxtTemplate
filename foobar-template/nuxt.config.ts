@@ -2,15 +2,12 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-    compatibilityDate: '2025-07-15',
-    future: {
-        compatibilityVersion: 4,
-    },
+    compatibilityDate: '2026-08-19',
     ssr: false,
 
     devtools: { enabled: true },
 
-    css: ['./app/assets/css/main.css'],
+    css: ['./assets/css/main.css'],
     
     imports: {
         dirs: [
@@ -18,6 +15,11 @@ export default defineNuxtConfig({
             'utils/*/*.ts'
         ]
     },
+
+    components: [
+        { path: '~/components/docs/components', pathPrefix: false, prefix: 'Docs' },
+        '~/components',
+    ],
 
     app: {
         baseURL: "/",
@@ -41,7 +43,7 @@ export default defineNuxtConfig({
                 { 
                     rel: "stylesheet", 
                     href: "node_modules/modern-normalize/modern-normalize.css" 
-                },
+                }
             ],
         }
     },

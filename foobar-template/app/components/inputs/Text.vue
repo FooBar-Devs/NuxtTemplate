@@ -119,13 +119,14 @@
                     @input="handleInput" @blur="handleBlur" @keypress="onkeypress"
 
                     class="peer wh-full bg-transparent outline-none placeholder:text-TBD-bg-light mt-px transition-300" 
-                    :class="[slim ? '' : '-mb-px']"
+                    :class="[slim ? '' : '-mb-px']"/>
 
 
                 <!-- PLACEHOLDER -->
                 <div v-if="inputValue == ''" 
-                    class="peer-focus:opacity-0 pointer-events-none flex-center absolute opacity-75 whitespace-nowrap mt-0.5" 
-                    :class="icon != '' ? slim ? 'left-8' : 'left-12' : 'left-3'">
+                    class="peer-focus:opacity-0 pointer-events-none flex-center absolute opacity-50
+                        whitespace-nowrap mt-0.5 transition-300" 
+                    :class="icon != '' ? slim ? 'left-8' : 'left-11' : slim ? 'left-1.5' : 'left-3'">
 
                     {{ placeholder }}
 

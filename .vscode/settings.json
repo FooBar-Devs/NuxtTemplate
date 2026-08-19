@@ -1,6 +1,7 @@
 {
     "editor.tabSize": 4,
     "editor.detectIndentation": false,
+
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -8,9 +9,11 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true
     },
+
     "hide-files.files": [],
-    //set tailwind as language format for only main.css
+
     "[css]": {
-        "editor.defaultFormatter": "bradlc.vscode-tailwindcss"
-    },
+        "editor.defaultFormatter": "bradlc.vscode-tailwindcss",
+        "editor.formatOnSave": true
+    }
 }

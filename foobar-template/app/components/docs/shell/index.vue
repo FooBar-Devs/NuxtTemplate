@@ -9,19 +9,19 @@
 <template>
     <div class="flex-col-full max-w-7xl items-center p-4 gap-4 text-TBD-text-dark dark:text-TBD-text-light">
         
-        <DocsHeader/>
+        <DocsShellHeader/>
 
         <div class="w-full flex gap-4">
             
-            <DocsAside/>
+            <DocsShellAside/>
                 
-            <DocsMain :eyebrow="eyebrow" :title="title" :summary="summary">
+            <DocsShellMain :eyebrow="eyebrow" :title="title" :summary="summary">
                 <slot/>
-            </DocsMain>
+            </DocsShellMain>
 
         </div>
 
-        <DocsFooter/>
+        <DocsShellFooter/>
         
     </div>
 </template>
