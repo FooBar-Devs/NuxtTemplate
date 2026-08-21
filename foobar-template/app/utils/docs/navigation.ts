@@ -47,7 +47,7 @@ export const docsSections: DocsNavSection[] = [
                 title: 'Checkbox Input',
                 description: 'Single-line checkbox input with vee-validate integration.',
                 path: '/components/inputs/checkbox',
-                status: 'needs-review',
+                status: 'ready',
             },
             {
                 title: 'Dropdown',
@@ -61,23 +61,28 @@ export const docsSections: DocsNavSection[] = [
                 path: '/components/inputs/color',
                 status: 'in-progress',
             },
+        ],
+    },
+    {
+        title: 'Input Helpers',
+        items: [
             {
                 title: 'Label',
                 description: 'Reusable field label with description and required marker.',
                 path: '/components/inputs/label',
-                status: 'needs-review',
+                status: 'ready',
             },
             {
                 title: 'Error Message',
                 description: 'Animated validation feedback component.',
                 path: '/components/inputs/errormessage',
-                status: 'needs-review',
+                status: 'ready',
             },
             {
                 title: 'Input Wrapper',
                 description: 'Shared field wrapper for label, input, and error.',
                 path: '/components/inputs/wrapper',
-                status: 'needs-review',
+                status: 'ready',
             },
         ],
     },

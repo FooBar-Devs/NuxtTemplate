@@ -59,9 +59,8 @@
 </script>
 
 <template>
-    <div class="w-fit">
-        <div class="flex items-center"
-            @click="disabled || readonly ? null : update(!inputValue)"
+    <label class="w-fit" :class="slim ? 'mb-1' : 'mb-2'" :for="name">
+        <div class="relative flex items-center"
             :class="[
                 slim ? 'gap-1' : 'gap-2',
 
@@ -76,7 +75,7 @@
             ]">
 
             <!-- CHECKBOX -->
-            <label class="relative flex-center justify-center p-1 rounded-full group peer" :for="name">
+            <label class="relative flex-center justify-center py-1 pr-1 rounded-full group peer" :for="name">
 
                 <input :id="name" :name="name" type="checkbox" :checked="inputValue" 
                     :disabled="disabled || readonly" :readonly="readonly"
@@ -120,8 +119,15 @@
             <!-- SLOT BEFORE-->
             <slot name="before"/>
 
-            <InputsLabel v-if="label || description" :label="label" :description="description" :required="required" :slim="slim" class="font-normal mb-0"
-                :description-class="slim ? 'text-2xs top-0.25!' : 'text-xs top-0.25!'" description-mark-class="-top-2!"
+            <InputsLabel v-if="label || description" :label="label" :for="name"
+                :description="description" :required="required" :slim="slim"
+                :description-class="
+                    description != '' && description
+                        ? slim ? 'text-2xs -top-0.25!' : 'text-xs -top-0.5!'
+                        : slim ? 'mt-0.5' : 'mt-2'
+                "
+                description-mark-class="-top-2!"
+                class="font-normal mb-0"
                 :class="[
                     slim ? '-mb-px' : '-mb-px',
                     { 'text-TBD-error-light' : errorMessage },
@@ -131,7 +137,13 @@
 
                     // readonly visual state
                     { 'opacity-50' : readonly && !disabled },
-                ]"/>
+                ]">
+                
+                <!-- LABEL SLOT -->
+                <template #label> <slot name="label"/> </template>
+                <template #description> <slot name="description"/> </template>
+
+            </InputsLabel>
 
             <!-- SLOT AFTER-->
             <slot name="after"/>
@@ -145,5 +157,5 @@
             :slim="slim"
         />
 
-    </div>
+    </label>
 </template>

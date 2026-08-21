@@ -295,7 +295,7 @@ const onkeypressExampleFun = (event: KeyboardEvent) => {
                         </div>
                     </DocsPanel>
 
-                    <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Textarea" body-class="p-4" class="col-span-2">
+                    <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Component" body-class="p-4" class="col-span-2">
 
                         <Form :validation-schema="schema" @submit="onSubmit" @invalid-submit="onInvalidSubmit">
                             <InputsTextArea

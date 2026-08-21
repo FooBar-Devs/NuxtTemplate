@@ -73,7 +73,7 @@
         <!-- LABEL SLOT -->
         <template #label> <slot name="label"/> </template>
         <template #description> <slot name="description"/> </template>
-
+c
         <!-- INPUT SLOT -->
         <template #input>
             <div @click="inputField.focus()" 
@@ -118,7 +118,7 @@
 
                     @input="handleInput" @blur="handleBlur" @keypress="onkeypress"
 
-                    class="peer wh-full bg-transparent outline-none placeholder:text-TBD-bg-light mt-px transition-300" 
+                    class="peer wh-full bg-transparent outline-none placeholder:text-TBD-bg-light mt-px pr-1 transition-300" 
                     :class="[slim ? '' : '-mb-px']"/>
 
 

@@ -78,11 +78,23 @@
         }
     ];
 
+    const documentedSlots = [
+        {
+            name: 'before',
+            description: 'Custom content displayed before the checkbox label and description.',
+        },
+        {
+            name: 'after',
+            description: 'Custom content displayed after the checkbox label and description.',
+        }
+    ];
+
     const pageSections = [
         { id: 'overview', title: 'Overview' },
         { id: 'basic-usage', title: 'Basic Usage' },
         { id: 'live-example', title: 'Live Example' },
         { id: 'validation', title: 'Validation' },
+        { id: 'slots', title: 'Slots' },
         { id: 'props', title: 'Props' },
     ];    
 
@@ -132,6 +144,24 @@
     </Form>
 </template>`;
 
+        const customContentCheckboxValue = ref(false);
+
+    const customContentCheckboxExample =
+`<InputsCheckBox v-model="checkedValue" 
+    name="notificationCheckbox" label="Turn on notifications">
+
+    <template #before>
+        <Icon name="tabler:info-circle" class="text-xl -mx-1"/>
+    </template>
+
+    <template #after>
+        <span class="text-xs opacity-75 absolute left-10 top-6.5 whitespace-nowrap">
+            Enable notifications to receive updates and alerts.
+        </span>
+    </template>
+
+</InputsCheckBox>`;
+
     const validationSchema = Yup.object({
         checkboxPreview: Yup.boolean()
             .oneOf([true], 'This option must be enabled.'),
@@ -166,6 +196,7 @@
                 disabled and read-only states, and before/after slots.
             </template>
 
+            <!-- Basic usage section -->
             <DocsArticleSection id="basic-usage" title="Basic Usage">
                 <template #description>
                     Bind the checkbox with <b>v-model</b> and provide a unique <b>name</b> and
@@ -180,6 +211,7 @@
                 <InputsCheckBox v-model="checkedBasic" name="checkboxBasic" title="Preference" label="Enable option" description="Use this option to enable the feature."/>
             </DocsArticleSection>
 
+            <!-- Live example section -->
             <DocsArticleSection id="live-example" title="Live Example">
                 <template #description>
                     Change the checkbox properties below to preview the component interactively.
@@ -200,7 +232,7 @@
                         </div>
                     </DocsPanel>
 
-                    <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Field" body-class="p-4" class="col-span-2">
+                    <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Component" body-class="p-4" class="col-span-2">
                         <Form :validation-schema="validationSchema" @submit="onSubmit" @invalid-submit="onInvalidSubmit">
                             <InputsCheckBox
                                 v-model="checkedExample"
@@ -229,6 +261,7 @@
                 </div>
             </DocsArticleSection>
 
+            <!-- Validation section -->
             <DocsArticleSection id="validation" title="Validation">
                 <template #description>
                     The checkbox integrates with
@@ -255,17 +288,46 @@
                 </Form>
             </DocsArticleSection>
 
+
+            <!-- Slots section -->
+            <DocsArticleSection id="slots" title="Slots">
+                <template #description>
+                    The checkbox supports <b>before</b> and <b>after</b> slots for adding custom content
+                    before or after the label and description.
+                </template>
+
+                <DocsCodeExample title="Custom Content Example" eyebrow="Example" description="Add custom content before and after the checkbox label and description.">
+                    {{ customContentCheckboxExample }}
+                </DocsCodeExample>
+
+                <InputsCheckBox v-model="customContentCheckboxValue" 
+                    name="checkboxCustomContent" label="Turn on notifications">
+
+                    <template #before>
+                        <Icon name="tabler:info-circle" class="text-xl -mx-1"/>
+                    </template>
+
+                    <template #after>
+                        <span class="text-xs opacity-75 whitespace-nowrap mt-0.5">
+                            | Enable notifications to receive updates and alerts.
+                        </span>
+                    </template>
+
+                </InputsCheckBox>
+
+                <DocsSlotsTable :rows="documentedSlots" class="mt-6"/>
+
+            </DocsArticleSection>
+
+            <!-- Props section -->
             <DocsArticleSection id="props" title="Props">
                 <template #description>
                     The following props are available on the component. The <b>name</b> and
                     <b>label</b> props are required.
                 </template>
 
-                <DocsPropsTable :rows="documentedProps"/>
+                <DocsPropsTable :rows="documentedProps" class="mt-6"/>
             </DocsArticleSection>
-
-            <!-- SLOT FOR CUSTOM CONTENT
-             TODO: Add custom content here -->
 
         </DocsArticle>
 

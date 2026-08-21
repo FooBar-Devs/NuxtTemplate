@@ -59,7 +59,7 @@
                 };
             case '/components/inputs/errormessage':
                 return {
-                    eyebrow: 'Components / Inputs',
+                    eyebrow: 'Components / Input / Helpers',
                     title: 'Error Message',
                     summary: 'Validation feedback component docs with inline and absolute display modes.',
                 };
@@ -71,13 +71,13 @@
                 };
             case '/components/inputs/wrapper':
                 return {
-                    eyebrow: 'Components / Inputs',
+                    eyebrow: 'Components / Input / Helpers',
                     title: 'Input Wrapper',
                     summary: 'Field wrapper docs for composing label, custom input content, and error handling.',
                 };
             case '/components/inputs/label':
                 return {
-                    eyebrow: 'Components / Inputs',
+                    eyebrow: 'Components / Input / Helpers',
                     title: 'Label',
                     summary: 'Reusable field label docs with helper text and required indicators.',
                 };

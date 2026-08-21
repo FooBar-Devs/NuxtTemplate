@@ -232,6 +232,7 @@
                 compact sizing, and disabled or read-only states.
             </template>
 
+            <!-- Basic usage section -->
             <DocsArticleSection id="basic-usage" title="Basic Usage">
                 <template #description>
                     Bind the component with <b>v-model</b> and provide a unique <b>name</b>.
@@ -254,6 +255,7 @@
                 />
             </DocsArticleSection>
 
+            <!-- Live example section -->
             <DocsArticleSection id="live-example" title="Live Example">
                 <template #description>
                     Use the controls to interactively change the numeric input's configuration
@@ -282,7 +284,7 @@
                         </div>
                     </DocsPanel>
 
-                    <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Field" body-class="p-4" class="col-span-2">
+                    <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Component" body-class="p-4" class="col-span-2">
                         <Form :validation-schema="schema" @submit="onSubmit" @invalid-submit="onInvalidSubmit">
                             <InputsNumber 
                                 v-model="value" 
@@ -308,6 +310,7 @@
                 </div>
             </DocsArticleSection>
 
+            <!-- Validation section -->
             <DocsArticleSection id="validation" title="Validation">
                 <template #description>
                     The component integrates with
@@ -327,6 +330,7 @@
                 </Form>
             </DocsArticleSection>
 
+            <!-- Props section -->
             <DocsArticleSection id="props" title="Props">
                 <template #description>
                     The following props are available on the component. The <b>name</b> prop

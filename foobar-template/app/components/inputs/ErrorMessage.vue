@@ -2,7 +2,6 @@
     const props = defineProps({
         errorMessage:  { type: String, default: "" },     // validation/error text to display
         errorAbsolute: { type: Boolean, default: false }, // switch between layout modes
-        slim:          { type: Boolean, default: false }, // compact layout adjustment
     });
 
     // Reference to the DOM element containing error text
@@ -40,10 +39,12 @@
     <div v-if="!errorAbsolute" 
         class="overflow-clip ml-1.5 text-TBD-error-light dark:text-TBD-error-dark transition-300 -mb-2"
         :style="{ height: errorMessage ? errorDivHeight + 'px' : '0' }"
-        :class="errorMessage ? 'opacity-100' : 'opacity-0'">
+        :class="[
+            errorMessage ? 'opacity-100' : 'opacity-0',
+        ]">
 
         <!-- Hidden measurement container (used for height calculation) -->
-        <div ref="errorDiv"> {{ errorMessage }} </div>
+        <div ref="errorDiv" class="-mt-0.5"> {{ errorMessage }} </div>
         
     </div>
     
@@ -56,7 +57,7 @@
             slim ? '-bottom-6' : '-bottom-8',
         ]">
 
-        {{ errorMessage }}
+        <div> {{ errorMessage }} </div>
 
     </div>
 

@@ -1,11 +1,11 @@
 <script setup lang="ts">
     const props = defineProps({
-        required:      { type: Boolean, default: false },       // marks field as required
-        label:         { type: String, default: "" },           // label text above input
-        description:   { type: String, default: "" },           // optional helper text under label
-        slim:          { type: Boolean, default: false },       // compact input variant
-        errorMessage:  { type: String, default: "" },           // validation error message
-        errorAbsolute: { type: Boolean, default: false },       // error message positioning mode
+        required:      { type: Boolean, default: false, required: false }, // marks field as required
+        label:         { type: String,  default: "",    required: false }, // label text above input
+        description:   { type: String,  default: "",    required: false }, // optional helper text under label
+        slim:          { type: Boolean, default: false, required: false }, // compact input variant
+        errorMessage:  { type: String,  default: "",    required: false }, // validation error message
+        errorAbsolute: { type: Boolean, default: false, required: false }, // error message positioning mode
     });
 </script>
 
@@ -25,7 +25,7 @@
         <slot name="input"/>
 
         <!-- ERROR MESSAGE -->
-        <InputsErrorMessage :errorAbsolute="errorAbsolute" :error-message="errorMessage" :slim="slim"/>
+        <InputsErrorMessage :errorAbsolute="errorAbsolute" :error-message="errorMessage"/>
 
     </div>
 </template>

@@ -10,16 +10,21 @@
 </script>
 
 <template>
-	<div v-if="label != ' ' || description != ' '" class="font-bold relative transition-300"
+	<label v-if="label != ' ' || description != ' '" 
+        class="font-bold relative transition-300"
         :class="[
-            slim ? 'text-xs' : 'text-sm',
-            description == ' ' || description == '' ? (slim ? '-mb-0.5' : '-mb-1') : ''
+            slim ? 'text-xs' : 'text-sm'
         ]">
 
-		<!-- MAIN LABEL TEXT -->
-		{{ label }}
+        <span class="relative"
+            :class="[
+                description == ' ' || description == '' ? (slim ? '-bottom-0.5' : '-bottom-1') : ''
+            ]">
+            <!-- MAIN LABEL TEXT -->
+            {{ label }}
 
-		<slot name="label"/>
+            <slot name="label"/>
+        </span>
 
 		<!-- REQUIRED MARK (when label exists) -->
 		<span v-if="required && label != ' ' && label" 
@@ -31,11 +36,11 @@
 		</span>
 
 		<!-- DESCRIPTION / HELPER TEXT -->
-		<div v-if="description != ' ' && description" 
+		<div v-if="description != ' '" 
             class="relative font-normal opacity-75 transition-300"
             :class="[
                 descriptionClass,
-                label != ' ' && label ? 'top-0.75' : '-top-0.75'
+                label != ' ' ? 'top-0.75' : '-top-0.75'
             ]">
 
 			{{ description }}
@@ -56,5 +61,5 @@
 
 		</div>
         
-	</div>
+	</label>
 </template>
