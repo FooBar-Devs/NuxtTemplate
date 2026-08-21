@@ -140,7 +140,7 @@
     // Vue v-model emit definition
     const emit = defineEmits<{
         (e: 'update:modelValue', value: number | null): void;
-        (e: 'watch', value: number | null): void;
+        (e: 'watch', value: number | null): void; // for parent component watchers
     }>();
 
     const inputField = ref(); // reference to actual input element

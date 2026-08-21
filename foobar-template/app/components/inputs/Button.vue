@@ -96,16 +96,13 @@
         ]">
 
         <!-- HOVER OVERLAY -->
-        <div
-            v-if="!outline"
-            class="not-group-disabled:group-hover:w-full h-full w-1/3 absolute-center transition-500 opacity-0 not-group-disabled:group-hover:opacity-100"
-            :class="[hoverClass, ButtonHover[color]]">
+        <div v-if="!outline" class="not-group-disabled:group-hover:w-full h-full w-1/3 absolute-center transition-500 
+            opacity-0 not-group-disabled:group-hover:opacity-100" :class="[hoverClass, ButtonHover[color]]">
         </div>
 
 
         <!-- BUTTON CONTENT -->
-        <div
-            class="relative flex-center-full transition-300"
+        <div class="relative flex-center-full transition-300"
             :class="[
                 textClass,
 
@@ -117,9 +114,7 @@
                 // outline vs filled text styles
                 outline ? ButtonOutline[color].text : 'font-bold'
             ]">
-
             <slot/>
-
         </div>
 
     </button>

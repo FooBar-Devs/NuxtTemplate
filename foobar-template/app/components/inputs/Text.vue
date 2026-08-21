@@ -9,10 +9,10 @@
         
         // form field props
         required:      { type: Boolean, default: false,        required: false }, // marks field as required
-        name:          { type: String,  default: "nameNeeded", required: true },  // input name/id (also used for form + validation)
+        name:          { type: String,  default: "nameNeeded", required: true  }, // input name/id (also used for form + validation)
         label:         { type: String,  default: "",           required: false }, // label text above input
         description:   { type: String,  default: "",           required: false }, // helper text under label
-        placeholder:   { type: String, default: "",  required: false },           // placeholder text shown when empty
+        placeholder:   { type: String,  default: "",           required: false }, // placeholder text shown when empty
         errorAbsolute: { type: Boolean, default: false,        required: false }, // error message positioning mode
         
         // optional icon & compact mode

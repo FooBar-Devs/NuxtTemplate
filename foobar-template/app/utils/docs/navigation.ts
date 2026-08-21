@@ -53,7 +53,7 @@ export const docsSections: DocsNavSection[] = [
                 title: 'Dropdown',
                 description: 'Selection list patterns, examples, and behavior notes.',
                 path: '/components/inputs/dropdown',
-                status: 'in-progress',
+                status: 'ready',
             },
             {
                 title: 'Color',

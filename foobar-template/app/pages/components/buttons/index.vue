@@ -164,7 +164,7 @@
                 <div class="grid gap-4 grid-cols-3">
                     
                     <DocsPanel icon="tabler:adjustments-horizontal" eyebrow="Playground" title="Controls" body-class="p-4">
-                        <div class="grid gap-3 md:grid-cols-2">
+                        <div class="grid gap-3 grid-cols-2">
                             <InputsCheckBox slim v-model="slim" label="Slim" name="buttonSlim"/>
                             <InputsCheckBox slim v-model="outline" label="Outline" name="buttonOutline"/>
                             <InputsCheckBox slim v-model="underline" label="Text hover underline" class="col-span-2" name="buttonUnderline"/>

@@ -143,6 +143,13 @@
             default: true,
             required: false,
         },
+        {
+            property: 'watch',
+            description: 'Emitted when the value changes, for parent component watchers.',
+            type: 'function',
+            default: '(value) => {}',
+            required: false,
+        }
     ];
 
     const basicExample =
