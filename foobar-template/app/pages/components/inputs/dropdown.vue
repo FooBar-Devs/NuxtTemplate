@@ -328,11 +328,11 @@
                             <InputsCheckBox slim v-model="hideDefaultItemLabel" label="Hide Default Item Label" name="dropdownHideLabel" />
                             <InputsCheckBox slim v-model="onlyPlaceholder" label="Only Placeholder" name="dropdownOnlyPlaceholder"/>
                             <InputsCheckBox slim v-model="showEmittedValue" label="Show Emitted Value" name="dropdownEmittedValue"/>
-                            <InputsCheckBox slim v-model="multiselect" label="Multiselect" name="dropdownMultiselect"/>
 
                             <InputsNumber slim label="Dropdown Height" v-model="dropdownHeight" name="dropdownHeight" :min="0" />
                             <InputsNumber slim label="Item Height" v-model="itemHeight" name="itemHeight" :min="0" />
                             <InputsNumber slim label="Visible Items" v-model="showItemsAmount" name="dropdownItems" :min="1"/>
+                            <InputsCheckBox slim v-model="multiselect" label="Multiselect" name="dropdownMultiselect"/>
                         </div>
                     </DocsPanel>
 

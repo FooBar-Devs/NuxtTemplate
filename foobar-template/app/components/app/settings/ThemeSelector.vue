@@ -57,7 +57,7 @@
         
         <InputsDropdown slim label="Trenutna tema" name="colorTheme" class="w-auto! grow" @click="themeStore.uiSettings.showSettingsOnHover = false; themeStore.uiSettings.showSidebarOnHover = false;" :showSelectedHighlight="false"
             v-model="themeStore.selectedTheme" :show-items-amount="5" @item-selected="(v : any) => emit('select', v as ColorTheme)" :dropdown-item-height="48" :dropdown-height="themeStore.uiSettings.colorThemes.length > 0 && themeStore.uiSettings.colorThemes.length < 5 ? 64 : 32" ref="colorThemesDropdown" :list="JSONIFY(themes)" labelName="name"
-            itemClass="h-fit! p-0!" hideDefaultLabel>
+            itemClass="h-fit! p-0!" hideDefaultItemLabel>
             <template #item="{ item, id, selected }">
                 <div class="flex flex-col w-full">
 

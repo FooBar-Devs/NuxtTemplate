@@ -283,8 +283,12 @@
 
             <!-- INPUT SLOT -->
             <template #input>
-                <div ref="inputRef" @click="disabled ? null : (inputField.focus(), setShow(!show, 'div1'))"
-                    @focusout="!focus ? setShow(false, 'div2') : ''"
+                <div ref="inputRef" @focusout="!focus ? setShow(false, 'div2') : ''"
+                    @mousedown.prevent="
+                        if (!disabled) {
+                            setShow(!show);
+                            inputField.focus();
+                        }"                    
                     :style="'height: ' + (slim && dropdownHeight == 48 ? 28 : dropdownHeight) + 'px'"
                     class="relative px-2.5 flex-center-full overflow-hidden transition-300 cursor-pointer rounded-md"
                     :class="[
