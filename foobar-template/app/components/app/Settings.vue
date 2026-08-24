@@ -18,8 +18,6 @@ import UISettings from './settings/UISettings.vue';
 
     defineProps({ settingsOpen: Boolean });
 
-    const hoverVariant = ref(-1)
-    const hoverColor = ref(-1)
     const newTheme = ref<ColorTheme>(JSONIFY(defaultColorTheme));
 
     const colorThemesCombined = computed(() => {
@@ -90,20 +88,14 @@ import UISettings from './settings/UISettings.vue';
                             @select="selectTheme" />
 
                         <!-- Theme Actions -->
-                        <ThemeActions 
-                            :selectedTheme="themeStore.selectedTheme"
+                        <ThemeActions :selectedTheme="themeStore.selectedTheme"
                             v-model:selectedThemeNewName="selectedThemeNewName" />
                         
                         <!-- Color editor -->
-                        <ColorEditor
-                            :selectedTheme="themeStore.selectedTheme"
-                            v-model:hoverColor="hoverColor"
-                            v-model:hoverVariant="hoverVariant"/>
+                        <ColorEditor :selectedTheme="themeStore.selectedTheme"/>
 
                         <!-- Image editor -->
-                        <ImageEditor
-                            :selectedTheme="themeStore.selectedTheme"
-                            v-model:hoverVariant="hoverVariant" />
+                        <ImageEditor :selectedTheme="themeStore.selectedTheme"/>
                     </div>
 
                 </div>

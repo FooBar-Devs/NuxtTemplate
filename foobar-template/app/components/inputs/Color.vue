@@ -2,17 +2,27 @@
     const themeStore = useThemeStore();
 
     const props = defineProps({
+
         // v-model value
-        modelValue:   { type: String, default: 'rgb(255, 255, 255)', required: true }, // Current color value.
+        modelValue:   { type: String,  default: 'rgb(255, 255, 255)', required: true },
 
-        // color picker state
-        hoverColor:   { type: Number, default: undefined, required: false },           // Currently active color index.
-        hoverVariant: { type: Number, default: undefined, required: false },           // Currently active variant index.
+        // color item indices
+        name:         { type: String,  default: '',      required: true  }, // Unique name for the color item
+        label:        { type: String,  default: '',      required: false }, // Label for the color item
 
-        // color picker position
-        i:            { type: Number, default: 0,         required: false },           // Color index within the parent matrix.
-        j:            { type: Number, default: 0,         required: false },           // Variant index within the parent matrix.
-        property:     { type: String, default: '',        required: true  },           // Unique identifier used for the teleported picker.
+        // Color picker configuration
+        valueType:    { type: String as PropType<'HEX8' | 'RGBA' | 'RGB' | 'HEX'>,        default: 'RGB',   required: false }, // Type of color value returned by the component
+        inputType:    { type: String as PropType<'RGB' | 'HSL' | 'HEX' | 'HSV' | 'CMYK'>, default: 'RGB',   required: false }, // Input type of colour values
+        mode:         { type: String as PropType<'solid' | 'gradient'>,                   default: 'solid', required: false }, // Color picker mode (solid or gradient)
+
+        // Color picker feature toggles
+        showAlpha:      { type: Boolean, default: false, required: false }, // Indicates if the alpha channel should be shown in the color picker
+        showColorList:  { type: Boolean, default: true,  required: false }, // Show color list in the color picker
+        showEyeDrop:    { type: Boolean, default: true,  required: false }, // Show eyedropper tool in the color picker
+        showPickerMode: { type: Boolean, default: true,  required: false }, // Show picker mode toggle in the color picker
+        showInputMenu:  { type: Boolean, default: true,  required: false }, // Show input menu in the color picker
+        showInputSet:   { type: Boolean, default: true,  required: false }, // Show input set in the color picker
+
     });
 
     // element references
@@ -29,7 +39,7 @@
         return themeStore.isDarkMode
             ? {
                 '--cp-primary': 'var(--color-TBD-primary-dark)',
-                '--cp-container-bg': 'rgba(var(--color-TBD-bg-dark-rgb), .5)',
+                '--cp-container-bg': 'rgba(var(--color-TBD-bg-dark-rgb), .75)',
                 '--cp-select-color': 'rgba(var(--color-TBD-primary-dark-rgb), .75)',
                 '--cp-range-border': 'var(--color-TBD-text-dark)',
                 '--cp-range-shadow': 'var(--color-TBD-primary-dark)',
@@ -70,7 +80,7 @@
     // Vue event definitions
     const emit = defineEmits<{
         (e: "update:modelValue", value: string): void;
-        (e: "leaveColorPicker"): void;
+        (e: "leaveColor"): void;
         (e: "clickColor"): void;
     }>();
 
@@ -86,20 +96,21 @@
 
     // Calculates color picker position relative to the color item
     function calculateGadgetPosition() {
-        // Only calculate position if the color item is active or hovered
-        if ((props.i != props.hoverColor || props.j != props.hoverVariant) && !active.value) return;
+
+        // Only calculate position if the color item is active
+        if (!active.value) return;
 
         if (parentRef.value && childRef.value) {
+
             // Get bounding rectangles of parent and child elements
             const parentRect = parentRef.value.getBoundingClientRect();
             const childRect = childRef.value.getBoundingClientRect();
-
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
 
             // Calculate initial position (centered below the parent)
-            let left = parentRect.left + parentRect.width / 2 - childRect.width / 2 + window.scrollX;
-            let top = parentRect.bottom + window.scrollY;
+            let left = parentRect.left + parentRect.width / 2 - childRect.width / 2;
+            let top = parentRect.bottom;
 
             // Check if the gadget goes out of the window bounds
             if (left + childRect.width > windowWidth) {
@@ -109,15 +120,15 @@
             }
 
             // Check if the gadget goes out of the window bounds vertically
-            if (top + childRect.height > windowHeight + window.scrollY) {
-                top = parentRect.top + window.scrollY - childRect.height;
-            } else if (top < window.scrollY) {
-                top = window.scrollY;
+            if (top + childRect.height > windowHeight) {
+                top = parentRect.top - childRect.height;
+            } else if (top < 0) {
+                top = 0;
             }
 
             // Ensure the gadget stays within the window bounds
             left = Math.min(windowWidth - childRect.width, Math.max(left, 0));
-            top = Math.min(windowHeight + window.scrollY - childRect.height, Math.max(top, window.scrollY));
+            top = Math.min(windowHeight - childRect.height, Math.max(top, 0));
 
             // Update the gadget styles with the calculated position
             gadgetStyles.value = {
@@ -133,45 +144,64 @@
 
         // Traverse up the DOM tree to check if the click was inside the color picker or color item
         while (target) {
-            if (target.classList.contains("ck-cp-container") || target.classList.contains("color")) return;
-
+            if (target.id === `color_${props.name}` || target.id === `parent_color_${props.name}`) {
+                return;
+            }
             target = target.parentElement as HTMLElement;
         }
 
-        emit("leaveColorPicker");
+        // If the click was outside, deactivate the color picker and emit the leave event
+        active.value = false;
+        emit("leaveColor");
     }
 
     // ResizeObserver to watch for changes in the color picker size
     const resizeObserver = ref<ResizeObserver | null>(null);
 
-    // Initialize color picker listeners and position
-    onMounted(async () => {
-        // Get the child element reference based on the unique property and indices
-        childRef.value = document.getElementById("color" + props.property + props.i + props.j);
-
-        // If the child element exists, set up the ResizeObserver and event listeners
-        if (childRef.value) {
-            resizeObserver.value = new ResizeObserver(() => {
-                calculateGadgetPosition();
-            });
-
-            resizeObserver.value.observe(childRef.value);
+    // Initialize color picker after v-if renders it
+    async function initializeColorPicker() {
+        if (!active.value) {
+            resizeObserver.value?.disconnect();
+            resizeObserver.value = null;
+            childRef.value = null;
+            return;
         }
 
+        // Wait for v-if to mount the ColorPicker
+        await nextTick();
+
+        // Get the child element reference based on the unique property
+        childRef.value = document.getElementById(`color_${props.name}`) as HTMLElement | null;
+
+        // If the child element exists, set up the ResizeObserver and calculate position
+        if (childRef.value) {
+            resizeObserver.value?.disconnect();
+            resizeObserver.value = new ResizeObserver(() => { calculateGadgetPosition(); });
+            resizeObserver.value.observe(childRef.value);
+
+            // Calculate only after the ColorPicker has been rendered and measured
+            calculateGadgetPosition();
+        }
+    }
+
+    // Watch active so the position is calculated after v-if mounts the ColorPicker
+    watch(active, () => {
+        initializeColorPicker();
+    });
+
+    // Initialize window and document listeners
+    onMounted(() => {
         // Add event listeners for window resize, scroll, and document click
         window.addEventListener("resize", calculateGadgetPosition);
         window.addEventListener("scroll", calculateGadgetPosition, true);
         document.addEventListener("click", handleClickOutside);
-
-        calculateGadgetPosition();
     });
 
     // Clean up listeners and observer
     onUnmounted(() => {
         // Disconnect the ResizeObserver if it exists
-        if (resizeObserver.value && childRef.value)
-            resizeObserver.value.unobserve(childRef.value);
-
+        resizeObserver.value?.disconnect();
+        
         // Remove event listeners when the component is unmounted
         window.removeEventListener("resize", calculateGadgetPosition);
         window.removeEventListener("scroll", calculateGadgetPosition, true);
@@ -180,43 +210,56 @@
 </script>
 
 <template>
-    <div ref="parentRef"
-        class="color cursor-pointer rounded-sm ring overflow-hidden group hover:overflow-visible w-4 h-4 hover:scale-125 transition-150"
-        :style="i != 0 ? `background-color: ${modelValue};` : `background-color: ${j == 1 ? 'black' : 'white'}; background-image: ${modelValue};`"
-        @click="
-            $emit('clickColor');
-            active = true;
-            color = modelValue;
-            calculateGadgetPosition();
-        ">
-        <Teleport to="body">
-            <ColorPicker
-                v-model="color"
-                showColorList
-                showEyeDrop
-                type="RGB"
-                inputType="RGB"
-                :class="[
-                    i == hoverColor && j == hoverVariant ? 'opacity-100' : 'opacity-0 pointer-events-none',
-                    themeStore.isDarkMode ? 'dark' : 'light', 'outline-TBD-bg-dark/5 dark:outline-TBD-bg-light/10'
-                ]"
-                :showAlpha="i == 0"`
-                :mode="i != 0 ? 'solid' : 'gradient'"
-                :showPickerMode="false"
-                :theme="themeStore.isDarkMode ? 'dark' : 'light'"
-                :id="'color' + property + i + j"
-                class="fixed transition-opacity duration-300 ease-in-out backdrop-blur-sm"
-                :style="{ ...gadgetStyles, ...colorPickerTheme }"
-                @blur="
-                    $emit('leaveColorPicker');
-                    active = false;
-                "
-            />
-        </Teleport>
+    <div class="flex items-center gap-1.5">
+        <div ref="parentRef" :id="`parent_color_${name}`"
+            class="color cursor-pointer rounded-sm ring overflow-hidden group hover:overflow-visible w-4 h-4 hover:scale-125 transition-150"
+            :style="`background-color: ${modelValue}; background-image: ${modelValue};`"
+            @click="
+                $emit('clickColor');
+                active = true;
+                color = modelValue;
+            ">
+            <Teleport to="body">
+                <Transition name="fade" mode="out-in">
+                    <ColorPicker v-if="active" v-model="color"
+                        :showAlpha="showAlpha"
+                        :showColorList="showColorList"
+                        :showEyeDrop="showEyeDrop"
+                        :showPickerMode="showPickerMode"
+                        :showInputMenu="showInputMenu"
+                        :showInputSet="showInputSet"
+                        :type="valueType"
+                        :inputType="inputType"
+                        :mode="mode"
+                        :theme="themeStore.isDarkMode ? 'dark' : 'light'"
+                        :id="`color_${name}`"
+                        class="fixed transition-opacity duration-300 ease-in-out backdrop-blur-sm"
+                        :class="[
+                            themeStore.isDarkMode ? 'dark' : 'light', 'outline-TBD-bg-dark/5 dark:outline-TBD-bg-light/10'
+                        ]"
+                        :style="{ ...gadgetStyles, ...colorPickerTheme }"
+                        @blur="
+                            $emit('leaveColor');
+                            active = false;
+                        "
+                    />
+                </Transition>
+            </Teleport>
+        </div>
+        <label class="text-xs pt-0.5"> {{ label }} </label>
     </div>
 </template>
 
 <style lang="scss">
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 0.3s ease-in-out;
+    }
+    .fade-enter-from, .fade-leave-to {
+        opacity: 0;
+    }
+    .fade-enter-to, .fade-leave-from {
+        opacity: 1;
+    }
     .ck-cp-container {
         backdrop-filter: blur(8px);
         .ck-gradient-set-label span {
@@ -281,7 +324,7 @@
     }
 
     .dark .ck-cp-container {
-        background-color: rgba(var(--color-TBD-bg-dark-rgb), 0.5);
+        background-color: rgba(var(--color-TBD-bg-dark-rgb), 0.75);
         .ck-cp-linear-angle-container input[type="range"] {
             background-color: var(--color-TBD-bg-dark);
             outline: 1px solid rgba(var(--color-TBD-text-light-rgb), 0.25);

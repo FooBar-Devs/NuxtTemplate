@@ -3,25 +3,9 @@
 
     interface Props {
         selectedTheme: ColorTheme;
-        hoverColor: number;
-        hoverVariant: number;
     }
 
     const props = defineProps<Props>();
-    const emit = defineEmits<{
-        'update:hoverColor': [value: number]
-        'update:hoverVariant': [value: number]
-    }>();
-
-    const hoverColorModel = computed({
-        get: () => props.hoverColor,
-        set: (value) => emit('update:hoverColor', value)
-    });
-
-    const hoverVariantModel = computed({
-        get: () => props.hoverVariant,
-        set: (value) => emit('update:hoverVariant', value)
-    });
 </script>
 
 <template>
@@ -30,7 +14,7 @@
 
         <div class="flex w-full justify-around gap-2">
             <div v-for="variant, j in (['light', 'dark'] as const)" :key="variant"
-                class="flex flex-col w-1/2 gap-1" @click="hoverVariantModel = j">
+                class="flex flex-col w-1/2 gap-1">
 
                 <p class="font-bold mb-2 sticky top-8 z-1 py-1 text-center bg-TBD-bg-light dark:bg-TBD-bg-dark rounded border border-TBD-bg-dark/25 dark:border-TBD-bg-light/25">
                     {{ variant === 'light' ? 'Svijetla tema' : 'Tamna tema' }}
@@ -44,14 +28,9 @@
                         :class="themeStore.getDefaultColorValue(variant, color.property).value == color.value ? 'opacity-25 pointer-events-none active:hover:rotate-0' : ''"
                         @mouseenter="setTooltip('Resetiraj boju')" @mouseleave="setTooltip()"/>
 
-                    <InputsColor :i="i" :j="j" :hoverColor="hoverColor"
-                        @clickColor="hoverColorModel = i; themeStore.uiSettings.showSettingsOnHover = false; themeStore.uiSettings.showSidebarOnHover = false;"
-                        :hoverVariant="hoverVariant" v-model="color.value" :property="color.property" 
-                        @leaveColorPicker="hoverColorModel = -1;"/>
-
-                    <label :for="color.property" :class="i==hoverColor && hoverVariant==j ? 'underline text-TBD-primary-light dark:text-TBD-primary-dark' : ''">
-                        {{ color.name }}
-                    </label>
+                    <InputsColor v-model="color.value" :name="`${color.property}_${i}_${j}`" :showPickerMode="false"
+                        :mode="i === 0 ? 'gradient' : 'solid'" :show-alpha="i === 0" :label="color.name"/>
+                        
                 </div>
             </div>
         </div>

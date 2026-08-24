@@ -3,11 +3,6 @@ export const defaultUISettings : UISettings = {
     selectedTheme: 'fooobar' as string,
     colorThemes: [] as ColorTheme[],
 
-    // IZBORNIK
-    fixedSidebar: true as boolean,
-    showSidebarOnHover: false as boolean,
-    showSettingsOnHover: false as boolean,
-
     // AKCIJE
     showQuickActionsOnHover: false as boolean,
     showThemeButton: true as boolean,

@@ -1,20 +1,11 @@
 <script setup lang="ts">
     interface Props {
         selectedTheme: ColorTheme;
-        hoverVariant: number;
     }
 
     const props = defineProps<Props>();
-    const emit = defineEmits<{
-        'update:hoverVariant': [value: number]
-    }>();
 
     const themeStore = useThemeStore();
-
-    const hoverVariantModel = computed({
-        get: () => props.hoverVariant,
-        set: (value) => emit('update:hoverVariant', value)
-    });
 </script>
 
 <template>
@@ -23,7 +14,7 @@
 
         <div class="flex w-full justify-around gap-2">
             <div v-for="variant, j in (['light', 'dark'] as const)" :key="variant"
-                class="flex flex-col w-1/2" @click="hoverVariantModel = j">
+                class="flex flex-col w-1/2">
 
                 <p class="font-bold mb-2 sticky top-8 z-1 py-1 text-center bg-TBD-bg-light dark:bg-TBD-bg-dark rounded border border-TBD-bg-dark/25 dark:border-TBD-bg-light/25">
                     {{ variant === 'light' ? 'Svijetla tema' : 'Tamna tema' }}

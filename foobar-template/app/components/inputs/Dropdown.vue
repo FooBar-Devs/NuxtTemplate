@@ -135,7 +135,9 @@
         emit('update:modelValue', newValue);
     }
 
-    function selectItem(value: Record<string, any> | string | number | boolean) {
+    async function selectItem(value: Record<string, any> | string | number | boolean) {
+        if (!props.multiselect && STRINGIFY(props.multiselect) && STRINGIFY(value) === STRINGIFY(selected.value)) return;
+        
         update(value);
         emit('itemSelected', value);
 
@@ -390,7 +392,7 @@
                                         `bg-TBD-primary-light dark:bg-TBD-primary-dark font-bold
                                         text-TBD-text-light dark:text-TBD-text-dark`,
 
-                                        { 'pointer-events-none': !multiselect },
+                                        { 'cursor-default!': !multiselect },
 
                                         multiselect
                                             ? `hover:bg-TBD-primary-light/75 dark:hover:bg-TBD-primary-dark/75`

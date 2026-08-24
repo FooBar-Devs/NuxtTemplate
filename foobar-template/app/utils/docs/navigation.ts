@@ -59,7 +59,7 @@ export const docsSections: DocsNavSection[] = [
                 title: 'Color',
                 description: 'Color picker trigger used by theme editing surfaces.',
                 path: '/components/inputs/color',
-                status: 'in-progress',
+                status: 'ready',
             },
         ],
     },

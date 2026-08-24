@@ -27,11 +27,6 @@ declare global {
 		selectedTheme: string;
 		colorThemes: ColorTheme[];
 
-		// IZBORNIK
-		fixedSidebar: boolean;
-		showSidebarOnHover: boolean;
-		showSettingsOnHover: boolean;
-
 		// AKCIJE
 		showQuickActionsOnHover: boolean;
 		showThemeButton: boolean;
