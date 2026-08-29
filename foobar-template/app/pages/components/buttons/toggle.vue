@@ -1,94 +1,114 @@
 <script setup lang="ts">
     const toggled = ref(false);
+    const toggledBasic = ref(false);
     const altAnimation = ref(false);
 
-    const propsRows = [
-        { name: 'toggled', type: 'boolean', required: true, description: 'Current on/off state.' },
-        { name: 'toggledIcon', type: 'string', required: false, description: 'Icon shown for active state.' },
-        { name: 'unToggledIcon', type: 'string', required: false, description: 'Icon shown for inactive state.' },
-        { name: 'altAnimation', type: 'boolean', required: false, description: 'Cross-fade icon animation mode.' },
-        { name: 'onToggle', type: 'event', required: false, description: 'Emitted on click.' },
+    const documentedProps = [
+        { property: 'modelValue', description: 'Current toggle state used by v-model.', type: 'boolean', default: false, required: true },
+        { property: 'manualUpdate', description: 'If true, the toggle will not automatically update the v-model value when clicked. The parent must handle the update manually.', type: 'boolean', default: false, required: false },
+        { property: 'toggledIcon', description: 'Icon displayed for toggled state.', type: 'string', default: 'line-md:sunny-loop', required: false },
+        { property: 'unToggledIcon', description: 'Icon displayed for untoggled state.', type: 'string', default: 'line-md:moon-loop', required: false },
+        { property: 'altAnimation', description: 'Uses cross-fade animation.', type: 'boolean', default: false, required: false },
     ];
 
-    const usageNotes = [
-        'Use InputsToggle for compact binary actions like theme mode switching.',
-        'Keep icon pairs semantically opposite so state changes are obvious.',
-        'Use altAnimation when visual noise should be reduced in dense panels.',
+    const documentedEvents = [
+        { method: 'onToggle', description: 'Emitted when the toggle is clicked.', parameters: [], returns: 'void' },
     ];
 
     const pageSections = [
         { id: 'overview', title: 'Overview' },
         { id: 'basic-usage', title: 'Basic Usage' },
-        { id: 'when-to-use', title: 'When to Use' },
         { id: 'live-example', title: 'Live Example' },
+        { id: 'events', title: 'Events' },
         { id: 'props', title: 'Props' },
     ];
+
+    const basicExample =
+`<InputsToggle
+    v-model="isDark"
+    @on-toggle="isDark = !isDark"
+/>`;
 </script>
 
 <template>
-    <DocsLayout>
-        <template #main>
-            <article class="space-y-6 text-sm text-TBD-text-dark dark:text-TBD-text-light">
-                <section id="overview" class="scroll-mt-8 space-y-2">
-                    <div class="inline-flex items-center gap-1.5 rounded-full border border-TBD-primary-light/25 bg-TBD-primary-light/8 px-2 py-0.5 text-[10px] font-semibold text-TBD-primary-light dark:border-TBD-primary-dark/30 dark:bg-TBD-primary-dark/12 dark:text-TBD-primary-dark">
-                        <Icon name="tabler:toggle-left" class="text-xs"/>
-                        <span>&lt;InputsToggle&gt;</span>
-                    </div>
-                    <h2 class="text-lg font-bold">InputsToggle</h2>
-                    <p class="text-xs leading-5 opacity-85 sm:text-sm">InputsToggle is an icon-first binary switch optimized for compact interfaces. It emits a simple click event while the parent owns and updates the toggled state.</p>
-                </section>
+    <div class="flex gap-4">
+        <DocsArticle title="InputsToggle">
 
-                <section id="basic-usage" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
-                    <h3 class="text-base font-bold">Basic Usage</h3>
-                    <p class="text-xs leading-5 opacity-85 sm:text-sm">Pass current state through `toggled` and listen to `onToggle` to flip that state in the parent. Optionally set custom icons and animation mode.</p>
+            <template #header>
+                <b>InputsToggle</b> is a compact icon-based toggle for binary
+                actions. The parent owns the <b>toggled</b> state, while the
+                component emits <b>onToggle</b> when clicked. Custom icons and
+                an alternative cross-fade animation are supported.
+            </template>
 
-                    <DocsCodeExample
-                        eyebrow="Example"
-                        title="Basic Template"
-                        description="Keep toggled state in the parent and handle onToggle to update it.">
-                        <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">&lt;InputsToggle</span></span>
-                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">:toggled</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"isDark"</span></span>
-                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">@on-toggle</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"isDark = !isDark"</span></span>
-                        <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">/&gt;</span></span>
-                    </DocsCodeExample>
-                </section>
+            <DocsArticleSection id="basic-usage" title="Basic Usage">
+                <template #description>
+                    Pass the current state through <b>toggled</b> and update it
+                    in response to <b>onToggle</b>. Custom icons and animation
+                    behavior can be configured through the optional props.
+                </template>
 
-                <section id="when-to-use" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
-                    <h3 class="text-base font-bold">When to Use</h3>
-                    <div class="grid gap-2.5 md:grid-cols-3">
-                        <div v-for="note in usageNotes" :key="note" class="rounded-md input-bg input-ring px-3 py-2.5 text-xs leading-5 sm:text-sm">
-                            {{ note }}
-                        </div>
-                    </div>
-                </section>
+                <DocsCodeExample
+                    eyebrow="Example"
+                    title="Basic Template"
+                    description="Keep toggle state in the parent and update it when the event is emitted.">
+                    {{ basicExample }}
+                </DocsCodeExample>
 
-                <section id="live-example" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
-                    <DocsPanel icon="tabler:beaker" eyebrow="Preview" title="Live Example" body-class="p-4">
-                        <div class="grid gap-2 md:grid-cols-2">
-                            <InputsCheckBox slim v-model="toggled" label="Toggled" />
-                            <InputsCheckBox slim v-model="altAnimation" label="Alt Animation" />
-                        </div>
+                <div class="mt-4 flex items-center gap-3">
+                    <InputsToggle v-model="toggledBasic"/>
+                    <span class="text-xs opacity-75">
+                        State: {{ toggledBasic ? 'On' : 'Off' }}
+                    </span>
+                </div>
+            </DocsArticleSection>
 
-                        <div class="mt-4 flex items-center gap-3">
-                            <InputsToggle :toggled="toggled" :alt-animation="altAnimation" @on-toggle="toggled = !toggled" />
-                            <span class="text-xs opacity-75">State: {{ toggled ? 'On' : 'Off' }}</span>
+            <DocsArticleSection id="live-example" title="Live Example">
+                <template #description>
+                    Change the toggle state and animation mode to preview the component.
+                </template>
+
+                <div class="grid gap-4 xl:grid-cols-[260px_minmax(0,1fr)]">
+                    <DocsPanel icon="tabler:adjustments-horizontal" eyebrow="Playground" title="Controls" body-class="p-4">
+                        <div class="flex flex-col gap-2">
+                            <InputsCheckBox slim name="altAnimation" v-model="altAnimation" label="Alt Animation" />
                         </div>
                     </DocsPanel>
-                </section>
 
-                <section id="props" class="scroll-mt-8 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
-                    <DocsPropsTable :rows="propsRows"/>
-                </section>
+                    <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Toggle" body-class="p-5">
 
-                <section class="rounded-md border border-TBD-secondary-light/35 bg-TBD-secondary-light/10 px-3.5 py-3 text-xs leading-5 dark:border-TBD-secondary-dark/40 dark:bg-TBD-secondary-dark/15 sm:text-sm">
-                    <p class="font-semibold text-TBD-secondary-light dark:text-TBD-secondary-dark">Testing Notes</p>
-                    <p class="mt-1.5 opacity-85">Verify icon swap timing for both animation modes and confirm parent-managed toggled state always stays in sync after repeated clicks.</p>
-                </section>
-            </article>
-        </template>
+                        <div class="flex items-center gap-3">
+                            <InputsToggle
+                                v-model="toggled"
+                                :alt-animation="altAnimation"
+                            />
+                            <span class="text-xs opacity-75">
+                                State: {{ toggled ? 'On' : 'Off' }}
+                            </span>
+                        </div>
+                    </DocsPanel>
+                </div>
+            </DocsArticleSection>
 
-        <template #aside>
-            <DocsOnThisPage :sections="pageSections"/>
-        </template>
-    </DocsLayout>
+            <DocsArticleSection id="events" title="Events">
+                <template #description>
+                    The component emits an event when clicked. The parent is
+                    responsible for updating <b>toggled</b>.
+                </template>
+
+                <DocsMethodsTable :rows="documentedEvents"/>
+            </DocsArticleSection>
+
+            <DocsArticleSection id="props" title="Props">
+                <template #description>
+                    Configure the toggle state, icons, and animation behavior.
+                </template>
+
+                <DocsPropsTable :rows="documentedProps"/>
+            </DocsArticleSection>
+
+        </DocsArticle>
+
+        <DocsOnThisPage :sections="pageSections"/>
+    </div>
 </template>

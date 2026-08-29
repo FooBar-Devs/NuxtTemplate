@@ -1,88 +1,81 @@
 <script setup lang="ts">
-    const image = ref('https://upload.wikimedia.org/wikipedia/sco/7/70/Bob_at_Easel.jpg');
+    const imageExample = ref('https://upload.wikimedia.org/wikipedia/sco/7/70/Bob_at_Easel.jpg');
+    const image = ref('https://fipu-educoder-nuxt.netlify.app/images/fun/cat_2.gif');
+    const background = ref(false);
+    const pixelThreshold = ref(32);
 
-    const propsRows = [
-        { name: 'image', type: 'string', required: true, description: 'Image URL/path used for preview background.' },
-    ];
-
-    const usageNotes = [
-        'Use this for thumbnail previews in media selectors and theme image pickers.',
-        'Provide stable image paths so preview refresh remains responsive while typing.',
-        'Rely on automatic pixel-art detection for low-resolution sprite assets.',
+    const documentedProps = [
+        { property: 'image', description: 'Image URL/path.', type: 'string', default: null, required: true },
+        { property: 'background', description: 'Optional background rendering mode.', type: 'boolean', default: false, required: false },
+        { property: 'pixelThreshold', description: 'Maximum dimensions for pixel-art detection.', type: 'number', default: 128, required: false },
     ];
 
     const pageSections = [
         { id: 'overview', title: 'Overview' },
         { id: 'basic-usage', title: 'Basic Usage' },
-        { id: 'when-to-use', title: 'When to Use' },
         { id: 'live-example', title: 'Live Example' },
         { id: 'props', title: 'Props' },
     ];
+
+    const basicExample =
+`<InputsImagePreview
+    :image="image"
+/>`;
 </script>
 
 <template>
-    <DocsLayout>
-        <template #main>
-            <article class="space-y-6 text-sm text-TBD-text-dark dark:text-TBD-text-light">
-                <section id="overview" class="scroll-mt-8 space-y-2">
-                    <div class="inline-flex items-center gap-1.5 rounded-full border border-TBD-primary-light/25 bg-TBD-primary-light/8 px-2 py-0.5 text-[10px] font-semibold text-TBD-primary-light dark:border-TBD-primary-dark/30 dark:bg-TBD-primary-dark/12 dark:text-TBD-primary-dark">
-                        <Icon name="tabler:photo" class="text-xs"/>
-                        <span>&lt;InputsImagePreview&gt;</span>
-                    </div>
-                    <h2 class="text-lg font-bold">InputsImagePreview</h2>
-                    <p class="text-xs leading-5 opacity-85 sm:text-sm">InputsImagePreview is a fixed-size visual preview block that displays an image path and automatically switches rendering style for pixel-art assets.</p>
-                </section>
+    <div class="flex gap-4">
+        <DocsArticle title="InputsImagePreview">
 
-                <section id="basic-usage" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
-                    <h3 class="text-base font-bold">Basic Usage</h3>
-                    <p class="text-xs leading-5 opacity-85 sm:text-sm">Pass an image URL through the `image` prop. Keep the preview near its related path input so users can instantly verify assets and style choices.</p>
+            <template #header>
+                <b>InputsImagePreview</b> displays an image preview and automatically uses
+                pixelated rendering for small images.
+            </template>
 
-                    <DocsCodeExample
-                        eyebrow="Example"
-                        title="Basic Template"
-                        description="Bind a path and render a fixed preview block with automatic rendering-style detection.">
-                        <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">&lt;InputsImagePreview</span></span>
-                        <span class="block pl-3"><span class="text-TBD-secondary-light dark:text-TBD-secondary-dark">:image</span>=<span class="text-TBD-confirm-light dark:text-TBD-confirm-dark">"imagePath"</span></span>
-                        <span class="block"><span class="text-TBD-primary-light dark:text-TBD-primary-dark">/&gt;</span></span>
-                    </DocsCodeExample>
-                </section>
+            <DocsArticleSection id="basic-usage" title="Basic Usage">
+                <template #description>
+                    Provide an image URL or path through <b>image</b>.
+                </template>
 
-                <section id="when-to-use" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
-                    <h3 class="text-base font-bold">When to Use</h3>
-                    <div class="grid gap-2.5 md:grid-cols-3">
-                        <div v-for="note in usageNotes" :key="note" class="rounded-md input-bg input-ring px-3 py-2.5 text-xs leading-5 sm:text-sm">
-                            {{ note }}
-                        </div>
-                    </div>
-                </section>
+                <DocsCodeExample eyebrow="Example" title="Basic Template" description="Render an image preview.">
+                    {{ basicExample }}
+                </DocsCodeExample>
 
-                <section id="live-example" class="scroll-mt-8 space-y-3 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
-                    <DocsPanel icon="tabler:beaker" eyebrow="Preview" title="Live Example" body-class="p-4">
-                        <div class="max-w-md space-y-3">
-                            <InputsText
-                                slim
-                                name="docsImagePreview"
-                                label="Image path"
-                                description="Try any public path"
-                                v-model="image" />
-                            <InputsImagePreview :image="image" />
+                <InputsImagePreview :image="imageExample" class="size-32"/>
+            </DocsArticleSection>
+
+            <DocsArticleSection id="live-example" title="Live Example">
+                <template #description>
+                    Test the image and pixel-art detection threshold.
+                </template>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <DocsPanel icon="tabler:adjustments-horizontal" eyebrow="Playground" title="Controls" body-class="p-4">
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <InputsText slim v-model="image" name="image" label="Image" class="col-span-2"/>
+                            <InputsNumber slim v-model="pixelThreshold" name="pixelThreshold" label="Pixel Threshold"/>
+                            <InputsCheckBox slim v-model="background" name="background" label="Background" class="self-end mb-2.25"/>
                         </div>
                     </DocsPanel>
-                </section>
 
-                <section id="props" class="scroll-mt-8 border-t border-TBD-bg-dark/10 pt-5 dark:border-TBD-bg-light/10">
-                    <DocsPropsTable :rows="propsRows"/>
-                </section>
+                    <DocsPanel icon="tabler:test-pipe" eyebrow="Preview" title="Rendered Component" body-class="p-4" class="col-span-2">
 
-                <section class="rounded-md border border-TBD-secondary-light/35 bg-TBD-secondary-light/10 px-3.5 py-3 text-xs leading-5 dark:border-TBD-secondary-dark/40 dark:bg-TBD-secondary-dark/15 sm:text-sm">
-                    <p class="font-semibold text-TBD-secondary-light dark:text-TBD-secondary-dark">Testing Notes</p>
-                    <p class="mt-1.5 opacity-85">Try both sprite-like and high-resolution images to confirm rendering mode changes and preview containment remain stable.</p>
-                </section>
-            </article>
-        </template>
+                        <InputsImagePreview :image="image" :pixel-threshold="pixelThreshold" :background="background" class="size-32"/>
 
-        <template #aside>
-            <DocsOnThisPage :sections="pageSections"/>
-        </template>
-    </DocsLayout>
+                    </DocsPanel>
+                </div>
+            </DocsArticleSection>
+
+            <DocsArticleSection id="props" title="Props">
+                <template #description>
+                    The following table lists the component's props, their types, default values, and whether they are required.
+                </template>
+                <DocsPropsTable :rows="documentedProps"/>
+            </DocsArticleSection>
+
+        </DocsArticle>
+
+        <DocsOnThisPage :sections="pageSections"/>
+    </div>
 </template>

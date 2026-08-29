@@ -18,7 +18,7 @@ export const docsSections: DocsNavSection[] = [
                 title: 'Overview',
                 description: 'Browse the component docs, examples, and testing pages.',
                 path: '/components',
-                status: 'needs-review',
+                status: 'ready',
             },
         ],
     },
@@ -50,13 +50,13 @@ export const docsSections: DocsNavSection[] = [
                 status: 'ready',
             },
             {
-                title: 'Dropdown',
+                title: 'Dropdown Input',
                 description: 'Selection list patterns, examples, and behavior notes.',
                 path: '/components/inputs/dropdown',
                 status: 'ready',
             },
             {
-                title: 'Color',
+                title: 'Color Input',
                 description: 'Color picker trigger used by theme editing surfaces.',
                 path: '/components/inputs/color',
                 status: 'ready',
@@ -96,16 +96,16 @@ export const docsSections: DocsNavSection[] = [
                 status: 'ready',
             },
             {
-                title: 'Toggle',
+                title: 'Toggle Button',
                 description: 'Compact binary switch with icon animations.',
                 path: '/components/buttons/toggle',
-                status: 'in-progress',
+                status: 'ready',
             },
             {
                 title: 'Collapse Button',
                 description: 'Directional compact trigger for collapsible UI panels.',
                 path: '/components/buttons/collapse',
-                status: 'in-progress',
+                status: 'ready',
             },
         ]
     }, 
@@ -117,7 +117,7 @@ export const docsSections: DocsNavSection[] = [
                 title: 'Image Preview',
                 description: 'Square image preview with pixel-art detection.',
                 path: '/components/images/preview',
-                status: 'in-progress',
+                status: 'ready',
             },
         ]
     },

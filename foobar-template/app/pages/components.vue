@@ -30,13 +30,13 @@
             case '/components/inputs/dropdown':
                 return {
                     eyebrow: 'Components / Inputs',
-                    title: 'Dropdown',
+                    title: 'Dropdown Input',
                     summary: 'Selection input docs with object mapping, placeholder behavior, and viewport-aware list positioning.',
                 };
             case '/components/buttons/toggle':
                 return {
                     eyebrow: 'Components / Buttons',
-                    title: 'Toggle',
+                    title: 'Toggle Button',
                     summary: 'Compact icon toggle documentation with animation variants and emitted click handling.',
                 };
             case '/components/buttons':
@@ -54,7 +54,7 @@
             case '/components/inputs/color':
                 return {
                     eyebrow: 'Components / Inputs',
-                    title: 'Color',
+                    title: 'Color Input',
                     summary: 'Color swatch and picker trigger documentation used for theme editing flows.',
                 };
             case '/components/inputs/errormessage':

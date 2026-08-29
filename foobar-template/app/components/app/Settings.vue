@@ -10,9 +10,10 @@ import UISettings from './settings/UISettings.vue';
     debouncedWatch(
         () => themeStore.selectedTheme,
         async (theme) => {
-            themeStore.setRootStyle();
             themeStore.updateStyle(theme, 'colors');
-            themeStore.updateStyle(theme, 'images');            
+            themeStore.updateStyle(theme, 'images');
+            themeStore.toggleTheme();
+            themeStore.toggleTheme();
         }, 'theme'
     );
 

@@ -48,9 +48,9 @@
 
             <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
                 <DocsPanel icon="tabler:components" eyebrow="Available Pages" title="Current Docs Pages">
-                    <div class="grid gap-3 md:grid-cols-2">
+                    <div class="grid gap-3 grid-cols-2">
                         <NuxtLink v-for="item in featuredItems" :key="item.title" :to="item.path">
-                            <DocsCard :item="item"/>
+                            <DocsCard :item="item" class="h-full"/>
                         </NuxtLink>
                     </div>
                 </DocsPanel>
